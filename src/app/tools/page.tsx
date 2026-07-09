@@ -1,0 +1,27 @@
+import type { Metadata } from "next";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { ToolPicker } from "@/components/tools/ToolPicker";
+import { ToolCatalog } from "@/components/tools/ToolCatalog";
+
+export const metadata: Metadata = {
+  title: "Tool Picker",
+  description: "Describe a task in plain language and get a ranked shortlist of the right AI tool for the job.",
+};
+
+export default function ToolsPage() {
+  return (
+    <div>
+      <PageHeader
+        eyebrow="Tool Picker"
+        title="Not sure which AI tool to use? Ask in plain language."
+        description="Describe what you're trying to get done and get a reasoned shortlist — matched against real workplace tasks, not just keyword guesses."
+      />
+      <ToolPicker />
+      <div className="mt-16">
+        <h2 className="mb-1 text-lg font-semibold text-text">Full tool catalog</h2>
+        <p className="mb-6 text-sm text-text-muted">Browse every tool covered on this platform.</p>
+        <ToolCatalog />
+      </div>
+    </div>
+  );
+}
