@@ -204,7 +204,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
                   value={certName}
                   onChange={(e) => setCertName(e.target.value)}
                   placeholder="Full name"
-                  className="focus-ring w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-text placeholder:text-text-muted/70 focus:border-primary"
+                  className="focus-ring w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
                 />
                 <Button variant="secondary" onClick={handleGenerateCertificate} disabled={!certName.trim()}>
                   <Award className="h-4 w-4" aria-hidden="true" />

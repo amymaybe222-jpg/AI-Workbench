@@ -68,7 +68,7 @@ export function ProfileView() {
                 id="p-name"
                 value={draft.name}
                 onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-                className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-sm text-text focus:border-primary"
+                className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text focus:border-primary"
               />
             </div>
             <div>
@@ -79,7 +79,7 @@ export function ProfileView() {
                 id="p-role"
                 value={draft.role}
                 onChange={(e) => setDraft({ ...draft, role: e.target.value })}
-                className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-sm text-text focus:border-primary"
+                className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text focus:border-primary"
               />
             </div>
             <div>
@@ -90,7 +90,7 @@ export function ProfileView() {
                 id="p-team"
                 value={draft.team}
                 onChange={(e) => setDraft({ ...draft, team: e.target.value })}
-                className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-sm text-text focus:border-primary"
+                className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text focus:border-primary"
               />
             </div>
             <div>
@@ -102,7 +102,7 @@ export function ProfileView() {
                 rows={3}
                 value={draft.bio}
                 onChange={(e) => setDraft({ ...draft, bio: e.target.value })}
-                className="focus-ring mt-1.5 w-full resize-y rounded-lg border border-border bg-surface-raised px-3 py-2 text-sm text-text focus:border-primary"
+                className="focus-ring mt-1.5 w-full resize-y rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text focus:border-primary"
               />
             </div>
             <div className="flex gap-2">

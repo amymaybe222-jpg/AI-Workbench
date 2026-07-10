@@ -118,7 +118,7 @@ export default function Home() {
         <h2 id="features-heading" className="text-xl font-semibold tracking-tight text-text sm:text-2xl">
           Everything in one workbench
         </h2>
-        <p className="mt-2 max-w-2xl text-sm text-text-muted sm:text-base">
+        <p className="mt-2 max-w-2xl text-base text-text-muted sm:text-lg">
           Six focused sections that take you from first concept to demonstrated, on-the-job capability.
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -165,7 +165,7 @@ export default function Home() {
               <h2 className="text-xl font-semibold tracking-tight text-text sm:text-2xl">
                 Ready to see where you stand?
               </h2>
-              <p className="mt-2 flex items-start gap-2 text-sm text-text-muted sm:text-base">
+              <p className="mt-2 flex items-start gap-2 text-base text-text-muted sm:text-lg">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-secondary" aria-hidden="true" />
                 Take a short assessment, score 80% or higher, and download a certificate for your portfolio.
               </p>

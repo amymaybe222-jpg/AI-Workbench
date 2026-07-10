@@ -62,7 +62,7 @@ export function NewPostForm({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="What did you build, learn, or try?"
-            className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-sm text-text placeholder:text-text-muted/70 focus:border-primary"
+            className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
           />
         </div>
         <div>
@@ -84,7 +84,7 @@ export function NewPostForm({
             placeholder="Share context, what worked, and what feedback you're looking for… (min. 30 characters)"
             aria-invalid={submitAttempted && bodyTooShort}
             aria-describedby="post-body-hint"
-            className={`focus-ring mt-1.5 w-full resize-y rounded-lg border bg-surface-raised px-3 py-2.5 text-sm text-text placeholder:text-text-muted/70 focus:border-primary ${
+            className={`focus-ring mt-1.5 w-full resize-y rounded-lg border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary ${
               submitAttempted && bodyTooShort ? "border-accent" : "border-border"
             }`}
           />

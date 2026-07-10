@@ -75,7 +75,7 @@ export function PostDetail({ postId }: { postId: string }) {
         </div>
 
         <h1 className="mt-5 text-xl font-semibold text-text sm:text-2xl">{post.title}</h1>
-        <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-text-muted sm:text-base">{post.body}</p>
+        <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-text-muted sm:text-lg">{post.body}</p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
           {post.tags.map((t) => (
@@ -138,7 +138,7 @@ export function PostDetail({ postId }: { postId: string }) {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Share feedback or a related tip…"
-              className="focus-ring w-full resize-y rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-text placeholder:text-text-muted/70 focus:border-primary"
+              className="focus-ring w-full resize-y rounded-lg border border-border bg-surface px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
             />
             <Button type="submit" className="shrink-0 sm:self-end" disabled={!comment.trim()}>
               <Send className="h-4 w-4" aria-hidden="true" />

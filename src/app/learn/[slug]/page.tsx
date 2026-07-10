@@ -58,7 +58,7 @@ export default async function LearnTopicPage({ params }: { params: Promise<{ slu
                 <h2 className="text-lg font-semibold text-text">{section.heading}</h2>
                 <div className="mt-2 space-y-3">
                   {section.body.map((paragraph, i) => (
-                    <p key={i} className="text-sm leading-relaxed text-text-muted sm:text-base">
+                    <p key={i} className="text-base leading-relaxed text-text-muted sm:text-lg">
                       {paragraph}
                     </p>
                   ))}
