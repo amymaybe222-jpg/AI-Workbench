@@ -14,7 +14,7 @@ export default function PromptsPage() {
       <PageHeader
         eyebrow="Prompt Library"
         title="Real workplace prompts, ready to copy and adapt"
-        description="Organized by function so you can find a strong starting point fast — from engineering pull requests to leadership comms."
+        description="Ready-to-use prompts organized by team and function."
       />
       <PromptLibrary />
     </div>
