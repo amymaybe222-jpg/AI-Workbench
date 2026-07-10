@@ -1,4 +1,4 @@
-import { BookOpen, Compass, Library, ClipboardCheck, MessagesSquare, UserCircle, ArrowRight, CheckCircle2, Award } from "lucide-react";
+import { BookOpen, Compass, Library, ClipboardCheck, MessagesSquare, UserCircle, ArrowRight, Award } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -47,20 +47,20 @@ const features = [
 
 const steps = [
   {
-    title: "Learn the fundamentals",
-    body: "Start with short, practical lessons on how generative AI works and what each major tool does well.",
+    title: "Learn",
+    body: "Understand AI concepts and popular tools.",
   },
   {
-    title: "Apply it to real work",
-    body: "Use the Tool Picker and Prompt Library to move from theory to a first draft in your actual role.",
+    title: "Apply",
+    body: "Use prompts and recommendations in your work.",
   },
   {
-    title: "Prove your understanding",
-    body: "Take a scored assessment and download a certificate once you consistently score 80% or higher.",
+    title: "Validate",
+    body: "Complete assessments and earn badges.",
   },
   {
-    title: "Build your portfolio",
-    body: "Your profile tracks completed assessments, certificates, and prompts you have saved — visible progress over time.",
+    title: "Showcase",
+    body: "Build a portfolio of projects and achievements.",
   },
 ];
 
@@ -150,15 +150,15 @@ export default function Home() {
         <h2 id="how-it-works-heading" className="text-xl font-semibold tracking-tight text-text sm:text-2xl">
           How it works
         </h2>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
-            <div key={step.title} className="relative">
+            <Card key={step.title}>
               <div className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/30 bg-primary/10 font-mono text-sm font-semibold text-primary">
                 {i + 1}
               </div>
-              <h3 className="mt-4 text-sm font-semibold text-text">{step.title}</h3>
+              <h3 className="mt-4 text-base font-semibold text-text">{step.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-text-muted">{step.body}</p>
-            </div>
+            </Card>
           ))}
         </div>
       </section>
@@ -171,10 +171,6 @@ export default function Home() {
               <h2 className="text-xl font-semibold tracking-tight text-text sm:text-2xl">
                 Ready to see where you stand?
               </h2>
-              <p className="mt-2 flex items-start gap-2 text-base text-text-muted sm:text-lg">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-secondary" aria-hidden="true" />
-                Take a short assessment, score 80% or higher, and download a certificate for your portfolio.
-              </p>
             </div>
             <LinkButton href="/assessments" size="lg" variant="secondary" className="shrink-0">
               Take an assessment
