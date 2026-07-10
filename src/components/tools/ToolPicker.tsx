@@ -6,16 +6,13 @@ import { Sparkles, SearchX } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Chip } from "@/components/ui/Chip";
-import { toolTasks, matchTasks } from "@/data/toolTasks";
+import { matchTasks } from "@/data/toolTasks";
 import { getToolById } from "@/data/tools";
 
 const quickPrompts = [
   "Write and reply to customer emails",
   "Summarize a 40-page report",
   "Generate unit tests for my code",
-  "Research a competitor's recent launch",
-  "Create visuals for a campaign",
-  "Turn meeting notes into action items",
 ];
 
 export function ToolPicker() {
@@ -113,12 +110,6 @@ export function ToolPicker() {
             ))
           )}
         </div>
-      )}
-
-      {!submitted && (
-        <p className="mt-6 text-xs text-text-muted">
-          Covers {toolTasks.length} common workplace scenarios — from writing and research to code and design.
-        </p>
       )}
     </div>
   );

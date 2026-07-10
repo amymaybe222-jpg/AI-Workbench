@@ -15,7 +15,7 @@ export default function ToolsPage() {
       <PageHeader
         eyebrow="Tool Picker"
         title="Not sure which AI tool to use? Ask in plain language."
-        description="Describe what you're trying to get done and get a reasoned shortlist — matched against real workplace tasks, not just keyword guesses."
+        description="Describe your task and get a reasoned shortlist of the right AI tool."
       />
       <ToolPicker />
       <div className="mt-16">
