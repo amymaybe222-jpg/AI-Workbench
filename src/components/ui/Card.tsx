@@ -15,7 +15,7 @@ export function Card({ className, hoverable = false, ...props }: CardProps) {
     <div
       ref={ref}
       className={cn(
-        "rounded-2xl border border-border bg-surface p-5 shadow-[0_2px_12px_-4px_rgba(21,19,31,0.06)] dark:shadow-[0_2px_14px_-4px_rgba(0,0,0,0.4)] sm:p-6",
+        "rounded-2xl border border-border bg-surface p-4 shadow-[0_2px_12px_-4px_rgba(21,19,31,0.06)] dark:shadow-[0_2px_14px_-4px_rgba(0,0,0,0.4)] sm:p-6",
         "transition-[opacity,transform] duration-700 ease-out",
         isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
         hoverable &&

@@ -66,10 +66,10 @@ const steps = [
 
 export default function Home() {
   return (
-    <div className="space-y-20 sm:space-y-24">
+    <div className="space-y-12">
       {/* Hero */}
-      <section className="pt-2 sm:pt-6">
-        <Badge tone="primary" className="mb-5">
+      <section>
+        <Badge tone="primary" className="mb-4">
           For professionals who use AI at work
         </Badge>
         <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-text sm:text-5xl sm:leading-[1.1]">
@@ -78,11 +78,11 @@ export default function Home() {
             Prove your progress.
           </span>
         </h1>
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-text-muted sm:text-lg">
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-text-muted sm:text-lg">
           For professionals who want to move beyond AI theory and start using it confidently in their day-to-day
           work.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap gap-4">
           <LinkButton href="/learn" size="lg">
             Start learning
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -98,23 +98,23 @@ export default function Home() {
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <Card className="text-center">
             <Library className="mx-auto h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="mt-2 font-mono text-2xl font-semibold text-text">{prompts.length}+</p>
-            <p className="mt-1 text-xs text-text-muted">Prompts ready to use</p>
+            <p className="mt-4 font-mono text-2xl font-semibold text-text">{prompts.length}+</p>
+            <p className="mt-4 text-xs text-text-muted">Prompts ready to use</p>
           </Card>
           <Card className="text-center">
             <Compass className="mx-auto h-5 w-5 text-secondary" aria-hidden="true" />
-            <p className="mt-2 font-mono text-2xl font-semibold text-text">{aiTools.length}</p>
-            <p className="mt-1 text-xs text-text-muted">Tools compared</p>
+            <p className="mt-4 font-mono text-2xl font-semibold text-text">{aiTools.length}</p>
+            <p className="mt-4 text-xs text-text-muted">Tools compared</p>
           </Card>
           <Card className="text-center">
             <ClipboardCheck className="mx-auto h-5 w-5 text-accent" aria-hidden="true" />
-            <p className="mt-2 font-mono text-2xl font-semibold text-text">{quizzes.length}</p>
-            <p className="mt-1 text-xs text-text-muted">Scored assessments</p>
+            <p className="mt-4 font-mono text-2xl font-semibold text-text">{quizzes.length}</p>
+            <p className="mt-4 text-xs text-text-muted">Scored assessments</p>
           </Card>
           <Card className="text-center">
             <Award className="mx-auto h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="mt-2 font-mono text-2xl font-semibold text-secondary">80%</p>
-            <p className="mt-1 text-xs text-text-muted">Certificate threshold</p>
+            <p className="mt-4 font-mono text-2xl font-semibold text-secondary">80%</p>
+            <p className="mt-4 text-xs text-text-muted">Certificate threshold</p>
           </Card>
         </div>
       </section>
@@ -124,10 +124,10 @@ export default function Home() {
         <h2 id="features-heading" className="text-xl font-semibold tracking-tight text-text sm:text-2xl">
           Everything in one workbench
         </h2>
-        <p className="mt-2 max-w-2xl text-base text-text-muted sm:text-lg">
+        <p className="mt-4 max-w-2xl text-base text-text-muted sm:text-lg">
           Six focused sections that take you from first concept to demonstrated, on-the-job capability.
         </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <Card key={feature.href} hoverable className="group">
               <a href={feature.href} className="focus-ring block rounded-lg">
@@ -135,7 +135,7 @@ export default function Home() {
                   <feature.icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 text-base font-semibold text-text">{feature.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-text-muted">{feature.description}</p>
+                <p className="mt-4 text-sm leading-relaxed text-text-muted">{feature.description}</p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary opacity-80 transition-opacity group-hover:opacity-100">
                   Explore <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
@@ -150,14 +150,14 @@ export default function Home() {
         <h2 id="how-it-works-heading" className="text-xl font-semibold tracking-tight text-text sm:text-2xl">
           How it works
         </h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <Card key={step.title}>
               <div className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/30 bg-primary/10 font-mono text-sm font-semibold text-primary">
                 {i + 1}
               </div>
               <h3 className="mt-4 text-base font-semibold text-text">{step.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-text-muted">{step.body}</p>
+              <p className="mt-4 text-sm leading-relaxed text-text-muted">{step.body}</p>
             </Card>
           ))}
         </div>
