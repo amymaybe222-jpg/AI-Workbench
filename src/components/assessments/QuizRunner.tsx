@@ -245,13 +245,21 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
                 )}
                 <div className="flex-1">
                   <p className="text-sm font-medium text-text">{q.question}</p>
-                  <p className="mt-1.5 text-sm text-text-muted">
-                    Correct answer: <span className="text-text">{q.options[q.correctIndex]}</span>
-                  </p>
-                  {!isCorrect && userAnswer !== null && (
-                    <p className="mt-1 text-sm text-accent">Your answer: {q.options[userAnswer]}</p>
+                  {isCorrect ? (
+                    <>
+                      <p className="mt-1.5 text-sm text-text-muted">
+                        Correct answer: <span className="text-text">{q.options[q.correctIndex]}</span>
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-text-muted">{q.explanation}</p>
+                    </>
+                  ) : (
+                    <>
+                      {userAnswer !== null && (
+                        <p className="mt-1.5 text-sm text-accent">Your answer: {q.options[userAnswer]}</p>
+                      )}
+                      <p className="mt-2 text-sm font-medium text-accent">Not quite right — try again.</p>
+                    </>
                   )}
-                  <p className="mt-2 text-sm leading-relaxed text-text-muted">{q.explanation}</p>
                 </div>
               </div>
             </Card>
