@@ -4,7 +4,8 @@ import { CommunityFeed } from "@/components/community/CommunityFeed";
 
 export const metadata: Metadata = {
   title: "Community",
-  description: "See how colleagues are applying AI day to day, and share your own work for feedback.",
+  description:
+    "Join an AI community of professionals sharing real workplace AI wins, prompts, and peer feedback.",
 };
 
 export default function CommunityPage() {

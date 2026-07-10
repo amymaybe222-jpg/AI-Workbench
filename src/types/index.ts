@@ -99,6 +99,9 @@ export interface CommunityPost {
   createdAt: string;
   likes: number;
   comments: CommunityComment[];
+  /** Shorter, keyword-focused variants for <title>/meta description, used when `title` runs too long for search snippets. */
+  seoTitle?: string;
+  seoDescription?: string;
 }
 
 export interface UserProfile {

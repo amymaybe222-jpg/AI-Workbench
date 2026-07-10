@@ -12,6 +12,9 @@ export const communityPosts: CommunityPost[] = [
     tags: ["engineering", "productivity", "retros"],
     createdAt: "2026-06-18T09:12:00.000Z",
     likes: 24,
+    seoTitle: "How Claude cut our retro prep to 5 min",
+    seoDescription:
+      "Priya Nair, an Engineering Manager, shares how she uses Claude to summarize sprint retro notes in minutes, not hours.",
     comments: [
       {
         id: "c1",
@@ -40,6 +43,9 @@ export const communityPosts: CommunityPost[] = [
     tags: ["engineering", "onboarding", "github-copilot"],
     createdAt: "2026-06-20T14:30:00.000Z",
     likes: 31,
+    seoTitle: "Using GitHub Copilot for repo onboarding",
+    seoDescription:
+      "Marcus Lee explains how GitHub Copilot Chat helped him ramp up on an unfamiliar legacy codebase without constant Slack questions.",
     comments: [
       {
         id: "c3",
@@ -61,6 +67,9 @@ export const communityPosts: CommunityPost[] = [
     tags: ["support", "feedback wanted", "templates"],
     createdAt: "2026-06-22T08:05:00.000Z",
     likes: 12,
+    seoTitle: "AI-drafted support macros — feedback wanted",
+    seoDescription:
+      "Jordan Kim, a Customer Support Lead, shares AI-drafted canned responses from the Prompt Library and asks for peer feedback on tone.",
     comments: [
       {
         id: "c4",
@@ -89,6 +98,9 @@ export const communityPosts: CommunityPost[] = [
     tags: ["assessments", "learning", "prompt-engineering"],
     createdAt: "2026-06-25T16:20:00.000Z",
     likes: 18,
+    seoTitle: "What I learned passing the prompt quiz",
+    seoDescription:
+      "Tomasz Nowak, a Product Manager, shares what surprised him after passing the Prompt Engineering Basics assessment.",
     comments: [
       {
         id: "c6",
@@ -110,6 +122,9 @@ export const communityPosts: CommunityPost[] = [
     tags: ["sales", "research", "perplexity"],
     createdAt: "2026-06-27T11:00:00.000Z",
     likes: 9,
+    seoTitle: "Using Perplexity for competitor research",
+    seoDescription:
+      "Elena Petrova, a Sales Director, uses Perplexity's cited AI research to prep faster for quarterly business reviews.",
     comments: [],
   },
 ];

@@ -5,7 +5,7 @@ import { PromptLibrary } from "@/components/prompts/PromptLibrary";
 export const metadata: Metadata = {
   title: "Prompt Library",
   description:
-    "Categorized, ready-to-use AI prompts for engineering, support, sales, leadership, HR, data, and marketing.",
+    "Categorized, ready-to-use AI prompts for engineering, support, sales, leadership, HR, data, and marketing teams.",
 };
 
 export default function PromptsPage() {

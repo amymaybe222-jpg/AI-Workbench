@@ -5,7 +5,8 @@ import { ToolCatalog } from "@/components/tools/ToolCatalog";
 
 export const metadata: Metadata = {
   title: "Tool Picker",
-  description: "Describe a task in plain language and get a ranked shortlist of the right AI tool for the job.",
+  description:
+    "Describe a task and get a ranked shortlist of the best AI tool for it — Claude, ChatGPT, Copilot, Perplexity, and more.",
 };
 
 export default function ToolsPage() {

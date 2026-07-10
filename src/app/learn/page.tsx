@@ -9,7 +9,7 @@ import { learnTopics } from "@/data/learn";
 export const metadata: Metadata = {
   title: "Learn AI",
   description:
-    "Structured, practical lessons on generative AI fundamentals and the major AI tools used in professional work.",
+    "Practical lessons on generative AI fundamentals, prompt engineering, and tools like Claude, ChatGPT, and Copilot — built for professional work.",
 };
 
 function TopicGrid({ category }: { category: "Foundations" | "Tools" }) {

@@ -18,11 +18,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ai-workbench.example.com"),
   title: {
-    default: "AI Workbench — Learn, Apply, and Track AI at Work",
+    default: "AI Workbench — Learn AI Skills & Track Your Progress",
     template: "%s · AI Workbench",
   },
   description:
-    "A professional workbench for understanding AI, choosing the right tools, using ready-to-go prompts, testing your knowledge, and tracking your growth over time.",
+    "AI Workbench helps professionals learn AI, pick the right AI tools, use ready-made prompts, and track progress with assessments and certificates.",
   keywords: [
     "AI training",
     "AI tools",
@@ -33,17 +33,17 @@ export const metadata: Metadata = {
     "professional development",
   ],
   openGraph: {
-    title: "AI Workbench — Learn, Apply, and Track AI at Work",
+    title: "AI Workbench — Learn AI Skills & Track Your Progress",
     description:
-      "Structured AI learning, a tool picker, a workplace prompt library, scored assessments, and a portfolio of your progress.",
+      "AI Workbench helps professionals learn AI, pick the right AI tools, use ready-made prompts, and track progress with assessments and certificates.",
     type: "website",
     siteName: "AI Workbench",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Workbench — Learn, Apply, and Track AI at Work",
+    title: "AI Workbench — Learn AI Skills & Track Your Progress",
     description:
-      "Structured AI learning, a tool picker, a workplace prompt library, scored assessments, and a portfolio of your progress.",
+      "AI Workbench helps professionals learn AI, pick the right AI tools, use ready-made prompts, and track progress with assessments and certificates.",
   },
   robots: {
     index: true,

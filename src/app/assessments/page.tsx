@@ -4,7 +4,8 @@ import { AssessmentsList } from "@/components/assessments/AssessmentsList";
 
 export const metadata: Metadata = {
   title: "Assessments",
-  description: "Short, scored quizzes that check your AI knowledge and award a certificate at 80% or above.",
+  description:
+    "Take short, scored AI assessments and quizzes, then earn a downloadable certificate for scoring 80% or above.",
 };
 
 export default function AssessmentsPage() {
