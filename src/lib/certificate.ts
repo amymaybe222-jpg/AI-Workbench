@@ -16,21 +16,21 @@ export function downloadCertificate(opts: {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  const bg = "#0f172a";
-  const surface = "#161f38";
-  const border = "#2a3a63";
-  const primary = "#818cf8";
-  const secondary = "#34d399";
-  const accent = "#f472b6";
-  const text = "#e2e8f0";
-  const muted = "#94a3b8";
+  const bg = "#f8f8fc";
+  const surface = "#ffffff";
+  const border = "#e4e1f0";
+  const primary = "#6d5df5";
+  const secondary = "#0ea5e9";
+  const accent = "#ec4899";
+  const text = "#15131f";
+  const muted = "#6b6980";
 
   // Background
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, width, height);
 
   // Subtle grid dots
-  ctx.fillStyle = "rgba(226,232,240,0.05)";
+  ctx.fillStyle = "rgba(21,19,31,0.05)";
   for (let x = 40; x < width; x += 40) {
     for (let y = 40; y < height; y += 40) {
       ctx.fillRect(x, y, 1, 1);
@@ -39,14 +39,14 @@ export function downloadCertificate(opts: {
 
   // Glow accents
   const glow1 = ctx.createRadialGradient(180, 140, 20, 180, 140, 420);
-  glow1.addColorStop(0, "rgba(129,140,248,0.25)");
-  glow1.addColorStop(1, "rgba(129,140,248,0)");
+  glow1.addColorStop(0, "rgba(109,93,245,0.18)");
+  glow1.addColorStop(1, "rgba(109,93,245,0)");
   ctx.fillStyle = glow1;
   ctx.fillRect(0, 0, width, height);
 
   const glow2 = ctx.createRadialGradient(width - 180, height - 160, 20, width - 180, height - 160, 420);
-  glow2.addColorStop(0, "rgba(52,211,153,0.2)");
-  glow2.addColorStop(1, "rgba(52,211,153,0)");
+  glow2.addColorStop(0, "rgba(14,165,233,0.16)");
+  glow2.addColorStop(1, "rgba(14,165,233,0)");
   ctx.fillStyle = glow2;
   ctx.fillRect(0, 0, width, height);
 
@@ -116,7 +116,7 @@ export function downloadCertificate(opts: {
   ctx.fillText(quizTitle, width / 2, 600);
 
   // Score badge
-  ctx.fillStyle = "rgba(52,211,153,0.12)";
+  ctx.fillStyle = "rgba(14,165,233,0.12)";
   ctx.strokeStyle = secondary;
   ctx.lineWidth = 1.5;
   ctx.beginPath();

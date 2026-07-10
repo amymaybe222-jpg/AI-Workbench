@@ -28,7 +28,7 @@ export function ProgressBar({ value, className, tone = "primary", label }: Progr
         aria-valuenow={clamped}
         aria-valuemin={0}
         aria-valuemax={100}
-        className="h-2 w-full overflow-hidden rounded-full bg-white/5"
+        className="h-2 w-full overflow-hidden rounded-full bg-surface-raised"
       >
         <div
           className={cn("h-full rounded-full transition-all duration-500 ease-out", toneColors[tone])}

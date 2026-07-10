@@ -8,15 +8,15 @@ export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
 const COLORS = {
-  bg: "#0f172a",
-  surface: "#161f38",
-  surfaceRaised: "#1c2745",
-  border: "#2a3a63",
-  text: "#e2e8f0",
-  textMuted: "#94a3b8",
-  primary: "#818cf8",
-  secondary: "#34d399",
-  accent: "#f472b6",
+  bg: "#f8f8fc",
+  surface: "#ffffff",
+  surfaceRaised: "#f2f0fb",
+  border: "#e4e1f0",
+  text: "#15131f",
+  textMuted: "#6b6980",
+  primary: "#6d5df5",
+  secondary: "#0ea5e9",
+  accent: "#ec4899",
 };
 
 // Satori (the renderer behind ImageResponse) requires ttf/otf/woff — it can't read woff2,

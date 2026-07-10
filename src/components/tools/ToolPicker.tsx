@@ -50,7 +50,7 @@ export function ToolPicker() {
         />
         <button
           type="submit"
-          className="focus-ring inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-medium text-slate-950 transition-all hover:bg-primary-hover active:scale-[0.98]"
+          className="focus-ring inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-white transition-all hover:bg-primary-hover active:scale-[0.98]"
         >
           <Sparkles className="h-4 w-4" aria-hidden="true" />
           Recommend a tool

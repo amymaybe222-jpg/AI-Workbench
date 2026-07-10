@@ -7,6 +7,7 @@ export const STORAGE_KEYS = {
   likedPosts: "aiw:liked-posts",
   likedPrompts: "aiw:liked-prompts",
   isLoggedIn: "aiw:is-logged-in",
+  theme: "aiw:theme",
 } as const;
 
 export const DEFAULT_PROFILE = {

@@ -4,18 +4,18 @@ export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "dan
 export type ButtonSize = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none focus-ring whitespace-nowrap";
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none focus-ring whitespace-nowrap";
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-primary text-slate-950 hover:bg-primary-hover active:scale-[0.98] shadow-[0_0_0_1px_rgba(129,140,248,0.4)] hover:shadow-[0_0_20px_-2px_rgba(129,140,248,0.55)]",
+    "bg-gradient-to-r from-primary to-[#8b6cf6] dark:to-secondary text-white shadow-[0_8px_24px_-8px_rgba(109,93,245,0.55)] dark:shadow-[0_8px_24px_-8px_rgba(139,124,247,0.45)] hover:shadow-[0_12px_28px_-6px_rgba(109,93,245,0.65)] dark:hover:shadow-[0_12px_28px_-6px_rgba(139,124,247,0.55)] hover:brightness-[1.04] active:scale-[0.98]",
   secondary:
-    "bg-secondary text-slate-950 hover:brightness-110 active:scale-[0.98] shadow-[0_0_0_1px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_-2px_rgba(52,211,153,0.5)]",
+    "bg-secondary text-white shadow-[0_8px_24px_-8px_rgba(14,165,233,0.5)] hover:brightness-105 hover:shadow-[0_12px_28px_-6px_rgba(14,165,233,0.6)] active:scale-[0.98]",
   outline:
-    "border border-border text-text hover:border-primary hover:text-primary bg-transparent hover:bg-primary/5",
-  ghost: "text-text-muted hover:text-text hover:bg-white/5",
+    "border border-border text-text hover:border-primary hover:text-primary bg-surface hover:bg-primary/5",
+  ghost: "text-text-muted hover:text-text hover:bg-text/5",
   danger:
-    "bg-accent/15 text-accent border border-accent/30 hover:bg-accent/25",
+    "bg-accent/10 text-accent border border-accent/25 hover:bg-accent/15",
 };
 
 const sizes: Record<ButtonSize, string> = {

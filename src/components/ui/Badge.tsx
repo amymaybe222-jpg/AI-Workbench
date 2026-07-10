@@ -8,10 +8,10 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const tones: Record<BadgeTone, string> = {
-  primary: "bg-primary/10 text-primary border-primary/25",
-  secondary: "bg-secondary/10 text-secondary border-secondary/25",
-  accent: "bg-accent/10 text-accent border-accent/25",
-  neutral: "bg-white/5 text-text-muted border-border",
+  primary: "bg-primary/10 text-primary border-primary/20",
+  secondary: "bg-secondary/10 text-secondary border-secondary/20",
+  accent: "bg-accent/10 text-accent border-accent/20",
+  neutral: "bg-surface-raised text-text-muted border-border",
 };
 
 export function Badge({ tone = "neutral", className, ...props }: BadgeProps) {

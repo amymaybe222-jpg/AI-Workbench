@@ -145,7 +145,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
                     selected === i ? "border-primary bg-primary" : "border-border"
                   )}
                 >
-                  {selected === i && <span className="h-1.5 w-1.5 rounded-full bg-slate-950" />}
+                  {selected === i && <span className="h-1.5 w-1.5 rounded-full bg-white" />}
                 </span>
                 {option}
               </button>

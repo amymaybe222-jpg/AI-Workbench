@@ -13,7 +13,7 @@ export function Chip({ active = false, className, ...props }: ChipProps) {
       className={cn(
         "focus-ring whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors duration-150",
         active
-          ? "border-primary bg-primary/15 text-primary"
+          ? "border-primary bg-primary/10 text-primary"
           : "border-border bg-surface text-text-muted hover:border-primary/40 hover:text-text",
         className
       )}

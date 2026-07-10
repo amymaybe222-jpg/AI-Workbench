@@ -9,6 +9,7 @@ import { navItems } from "./navItems";
 import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 function initials(name: string) {
   return name
@@ -31,7 +32,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="focus-ring -ml-1.5 flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-white/5 hover:text-text lg:hidden"
+            className="focus-ring -ml-1.5 flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text lg:hidden"
             aria-label="Open navigation menu"
             aria-expanded={open}
           >
@@ -42,15 +43,18 @@ export function Header() {
           </div>
         </div>
 
-        <Link
-          href="/profile"
-          className="focus-ring flex items-center gap-2.5 rounded-full border border-border bg-surface py-1 pl-1 pr-3 transition-colors hover:border-primary/40"
-        >
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold text-primary">
-            {initials(profile.name)}
-          </span>
-          <span className="hidden text-sm font-medium text-text sm:inline">{profile.name}</span>
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            href="/profile"
+            className="focus-ring flex items-center gap-2.5 rounded-full border border-border bg-surface py-1 pl-1 pr-3 transition-colors hover:border-primary/40"
+          >
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold text-primary">
+              {initials(profile.name)}
+            </span>
+            <span className="hidden text-sm font-medium text-text sm:inline">{profile.name}</span>
+          </Link>
+        </div>
       </header>
 
       {/* Mobile drawer */}
@@ -82,7 +86,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="focus-ring flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-white/5 hover:text-text"
+              className="focus-ring flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
               aria-label="Close navigation menu"
             >
               <X className="h-5 w-5" aria-hidden="true" />
@@ -100,7 +104,7 @@ export function Header() {
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "focus-ring flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                    isActive ? "bg-primary/10 text-primary" : "text-text-muted hover:bg-white/5 hover:text-text"
+                    isActive ? "bg-primary/10 text-primary" : "text-text-muted hover:bg-text/5 hover:text-text"
                   )}
                 >
                   <Icon className="h-[18px] w-[18px] shrink-0" aria-hidden="true" />
