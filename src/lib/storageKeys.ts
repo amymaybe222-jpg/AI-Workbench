@@ -5,6 +5,7 @@ export const STORAGE_KEYS = {
   savedPrompts: "aiw:saved-prompts",
   communityPosts: "aiw:community-posts",
   likedPosts: "aiw:liked-posts",
+  likedPrompts: "aiw:liked-prompts",
 } as const;
 
 export const DEFAULT_PROFILE = {

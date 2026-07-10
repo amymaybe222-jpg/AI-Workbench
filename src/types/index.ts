@@ -51,6 +51,7 @@ export interface Prompt {
   description: string;
   prompt: string;
   tags: string[];
+  likes: number;
 }
 
 export interface QuizQuestion {

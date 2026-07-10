@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { SaveButton } from "./SaveButton";
+import { LikeButton } from "./LikeButton";
 import { Prompt } from "@/types";
 
 export function PromptCard({ prompt }: { prompt: Prompt }) {
@@ -33,6 +34,7 @@ export function PromptCard({ prompt }: { prompt: Prompt }) {
       <div className="mt-4 flex items-center gap-2 border-t border-border pt-4">
         <CopyButton text={prompt.prompt} />
         <SaveButton promptId={prompt.id} />
+        <LikeButton promptId={prompt.id} baseLikes={prompt.likes} />
       </div>
     </Card>
   );
