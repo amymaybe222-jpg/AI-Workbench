@@ -8,6 +8,7 @@ import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
 
 const suggestedTags = ["engineering", "productivity", "prompt-engineering", "support", "sales", "learning"];
+const MIN_BODY_LENGTH = 30;
 
 export function NewPostForm({
   onSubmit,
@@ -20,6 +21,10 @@ export function NewPostForm({
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+
+  const bodyLength = body.trim().length;
+  const bodyTooShort = bodyLength < MIN_BODY_LENGTH;
 
   function toggleTag(tag: string) {
     setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
@@ -27,7 +32,8 @@ export function NewPostForm({
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim() || !body.trim()) return;
+    setSubmitAttempted(true);
+    if (!title.trim() || bodyTooShort) return;
     onSubmit({
       title: title.trim(),
       body: body.trim(),
@@ -39,11 +45,12 @@ export function NewPostForm({
     setTitle("");
     setBody("");
     setSelectedTags([]);
+    setSubmitAttempted(false);
   }
 
   return (
     <Card className="border-primary/25">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} noValidate className="space-y-4">
         <div>
           <label htmlFor="post-title" className="text-xs font-medium text-text-muted">
             Title
@@ -59,18 +66,33 @@ export function NewPostForm({
           />
         </div>
         <div>
-          <label htmlFor="post-body" className="text-xs font-medium text-text-muted">
-            Details
-          </label>
+          <div className="flex items-center justify-between">
+            <label htmlFor="post-body" className="text-xs font-medium text-text-muted">
+              Details
+            </label>
+            <span className={`text-xs ${bodyTooShort ? "text-accent" : "text-secondary"}`}>
+              {bodyLength}/{MIN_BODY_LENGTH} min
+            </span>
+          </div>
           <textarea
             id="post-body"
             required
+            minLength={MIN_BODY_LENGTH}
             rows={4}
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="Share context, what worked, and what feedback you're looking for…"
-            className="focus-ring mt-1.5 w-full resize-y rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-sm text-text placeholder:text-text-muted/70 focus:border-primary"
+            placeholder="Share context, what worked, and what feedback you're looking for… (min. 30 characters)"
+            aria-invalid={submitAttempted && bodyTooShort}
+            aria-describedby="post-body-hint"
+            className={`focus-ring mt-1.5 w-full resize-y rounded-lg border bg-surface-raised px-3 py-2.5 text-sm text-text placeholder:text-text-muted/70 focus:border-primary ${
+              submitAttempted && bodyTooShort ? "border-accent" : "border-border"
+            }`}
           />
+          {submitAttempted && bodyTooShort && (
+            <p id="post-body-hint" className="mt-1.5 text-xs text-accent">
+              Add a bit more detail — at least {MIN_BODY_LENGTH} characters ({bodyLength}/{MIN_BODY_LENGTH} so far).
+            </p>
+          )}
         </div>
         <div>
           <p className="text-xs font-medium text-text-muted">Tags</p>
