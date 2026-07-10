@@ -14,7 +14,7 @@ export default function AssessmentsPage() {
       <PageHeader
         eyebrow="Assessments"
         title="Test your understanding"
-        description="Each assessment is under 10 questions. Score 80% or higher to unlock a downloadable certificate for your portfolio."
+        description="Short quizzes. Score 80% or higher to earn a certificate."
       />
       <AssessmentsList />
     </div>

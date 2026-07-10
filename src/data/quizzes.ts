@@ -4,7 +4,7 @@ export const quizzes: Quiz[] = [
   {
     id: "ai-fundamentals",
     title: "AI Fundamentals",
-    description: "Core AI concepts every professional should know before using AI tools like Claude and ChatGPT day to day.",
+    description: "Core AI concepts every professional should know.",
     estimatedMinutes: 6,
     questions: [
       {
@@ -116,8 +116,7 @@ export const quizzes: Quiz[] = [
   {
     id: "prompt-engineering",
     title: "Prompt Engineering Basics",
-    description:
-      "Test your prompt engineering skills — practical techniques for writing prompts that get better AI results.",
+    description: "Practical techniques for writing better AI prompts.",
     estimatedMinutes: 5,
     questions: [
       {
@@ -216,8 +215,7 @@ export const quizzes: Quiz[] = [
   {
     id: "choosing-tools",
     title: "Choosing the Right AI Tool",
-    description:
-      "Test your ability to match a workplace task to the most appropriate AI tool, from Claude to Copilot.",
+    description: "Match workplace tasks to the right AI tool.",
     estimatedMinutes: 5,
     questions: [
       {
