@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/Button";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
 
-const suggestedTags = ["engineering", "productivity", "prompt-engineering", "support", "sales", "learning"];
 const MIN_BODY_LENGTH = 30;
 
 export function NewPostForm({
@@ -20,15 +19,10 @@ export function NewPostForm({
   const [profile] = useLocalStorage(STORAGE_KEYS.profile, DEFAULT_PROFILE);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
   const bodyLength = body.trim().length;
   const bodyTooShort = bodyLength < MIN_BODY_LENGTH;
-
-  function toggleTag(tag: string) {
-    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
-  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,14 +31,13 @@ export function NewPostForm({
     onSubmit({
       title: title.trim(),
       body: body.trim(),
-      tags: selectedTags,
+      tags: [],
       author: profile.name,
       role: profile.role,
       team: profile.team,
     });
     setTitle("");
     setBody("");
-    setSelectedTags([]);
     setSubmitAttempted(false);
   }
 
@@ -93,26 +86,6 @@ export function NewPostForm({
               Add a bit more detail — at least {MIN_BODY_LENGTH} characters ({bodyLength}/{MIN_BODY_LENGTH} so far).
             </p>
           )}
-        </div>
-        <div>
-          <p className="text-xs font-medium text-text-muted">Tags</p>
-          <div className="mt-1.5 flex flex-wrap gap-2">
-            {suggestedTags.map((tag) => (
-              <button
-                type="button"
-                key={tag}
-                onClick={() => toggleTag(tag)}
-                aria-pressed={selectedTags.includes(tag)}
-                className={`focus-ring rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                  selectedTags.includes(tag)
-                    ? "border-primary bg-primary/15 text-primary"
-                    : "border-border text-text-muted hover:border-primary/40"
-                }`}
-              >
-                #{tag}
-              </button>
-            ))}
-          </div>
         </div>
         <div className="flex justify-end gap-2 pt-1">
           <Button type="button" variant="ghost" onClick={onCancel}>

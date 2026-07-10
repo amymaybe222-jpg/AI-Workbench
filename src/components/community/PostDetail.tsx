@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Heart, Send } from "lucide-react";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
@@ -76,14 +75,6 @@ export function PostDetail({ postId }: { postId: string }) {
 
         <h1 className="mt-5 text-xl font-semibold text-text sm:text-2xl">{post.title}</h1>
         <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-text-muted sm:text-lg">{post.body}</p>
-
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {post.tags.map((t) => (
-            <Badge key={t} tone="neutral">
-              #{t}
-            </Badge>
-          ))}
-        </div>
 
         <div className="mt-5 flex items-center gap-4 border-t border-border pt-4">
           <button

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Heart, MessageCircle } from "lucide-react";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 import { CommunityPost } from "@/types";
 
@@ -54,14 +53,6 @@ export function PostCard({
         <h3 className="text-base font-semibold text-text hover:text-primary">{post.title}</h3>
         <p className="mt-1.5 line-clamp-3 text-sm leading-relaxed text-text-muted">{post.body}</p>
       </Link>
-
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {post.tags.map((tag) => (
-          <Badge key={tag} tone="neutral">
-            #{tag}
-          </Badge>
-        ))}
-      </div>
 
       <div className="mt-4 flex items-center gap-4 border-t border-border pt-4 text-sm text-text-muted">
         <button
