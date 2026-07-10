@@ -135,6 +135,16 @@ export function ProfileView() {
               {profile.role} · {profile.team}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-text-muted">{profile.bio}</p>
+            {profile.website && (
+              <a
+                href={profile.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="focus-ring mt-3 inline-block truncate text-sm font-medium text-primary hover:text-primary-hover"
+              >
+                {profile.website.replace(/^https?:\/\//, "")}
+              </a>
+            )}
           </div>
         )}
       </Card>

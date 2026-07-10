@@ -1,4 +1,13 @@
-import { BookOpen, Compass, Library, ClipboardCheck, MessagesSquare, UserCircle, LayoutDashboard } from "lucide-react";
+import {
+  BookOpen,
+  Compass,
+  Library,
+  ClipboardCheck,
+  MessagesSquare,
+  UserCircle,
+  LayoutDashboard,
+  Settings,
+} from "lucide-react";
 
 export const navItems = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
@@ -8,4 +17,5 @@ export const navItems = [
   { href: "/assessments", label: "Assessments", icon: ClipboardCheck },
   { href: "/community", label: "Community", icon: MessagesSquare },
   { href: "/profile", label: "Profile", icon: UserCircle },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];

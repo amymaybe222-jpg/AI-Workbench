@@ -6,6 +6,7 @@ export const STORAGE_KEYS = {
   communityPosts: "aiw:community-posts",
   likedPosts: "aiw:liked-posts",
   likedPrompts: "aiw:liked-prompts",
+  isLoggedIn: "aiw:is-logged-in",
 } as const;
 
 export const DEFAULT_PROFILE = {
@@ -13,4 +14,5 @@ export const DEFAULT_PROFILE = {
   role: "Product Manager",
   team: "Growth",
   bio: "Exploring how AI fits into day-to-day product work — drafting specs faster and learning to prompt more effectively.",
+  website: "",
 };

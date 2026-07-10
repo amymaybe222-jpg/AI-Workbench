@@ -109,4 +109,5 @@ export interface UserProfile {
   role: string;
   team: string;
   bio: string;
+  website?: string;
 }
