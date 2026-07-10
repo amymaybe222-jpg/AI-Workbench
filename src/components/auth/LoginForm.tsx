@@ -27,7 +27,7 @@ export function LoginForm() {
       <Card className="w-full">
         <h1 className="text-lg font-semibold text-text">Sign in</h1>
         <p className="mt-1 text-sm text-text-muted">
-          Demo environment — any email and password will sign you in.
+          Enter your work email and password to continue.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
