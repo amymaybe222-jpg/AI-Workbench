@@ -27,40 +27,59 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border bg-bg/85 px-4 backdrop-blur sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="focus-ring -ml-1.5 flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text lg:hidden"
-            aria-label="Open navigation menu"
-            aria-expanded={open}
-          >
-            <Menu className="h-5 w-5" aria-hidden="true" />
-          </button>
-          <div className="lg:hidden">
+      <header className="sticky top-0 z-20 border-b border-border bg-bg/85 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="focus-ring -ml-1.5 flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text xl:hidden"
+              aria-label="Open navigation menu"
+              aria-expanded={open}
+            >
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            </button>
             <Logo />
           </div>
-        </div>
 
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <Link
-            href="/profile"
-            className="focus-ring flex items-center gap-2.5 rounded-full border border-border bg-surface py-1 pl-1 pr-3 transition-colors hover:border-primary/40"
-          >
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold text-primary">
-              {initials(profile.name)}
-            </span>
-            <span className="hidden text-sm font-medium text-text sm:inline">{profile.name}</span>
-          </Link>
+          <nav className="hidden flex-1 items-center justify-center gap-1 xl:flex" aria-label="Main navigation">
+            {navItems.map((item) => {
+              const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "focus-ring whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                    isActive ? "bg-primary/10 text-primary" : "text-text-muted hover:bg-text/5 hover:text-text"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="flex shrink-0 items-center gap-3">
+            <ThemeToggle />
+            <Link
+              href="/profile"
+              className="focus-ring flex items-center gap-2.5 rounded-full border border-border bg-surface py-1 pl-1 pr-3 transition-colors hover:border-primary/40"
+            >
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold text-primary">
+                {initials(profile.name)}
+              </span>
+              <span className="hidden text-sm font-medium text-text sm:inline">{profile.name}</span>
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Mobile drawer */}
       <div
         className={cn(
-          "fixed inset-0 z-40 lg:hidden",
+          "fixed inset-0 z-40 xl:hidden",
           open ? "pointer-events-auto" : "pointer-events-none"
         )}
         aria-hidden={!open}
