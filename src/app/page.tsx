@@ -1,4 +1,4 @@
-import { BookOpen, Compass, Library, ClipboardCheck, MessagesSquare, UserCircle, ArrowRight, CheckCircle2 } from "lucide-react";
+import { BookOpen, Compass, Library, ClipboardCheck, MessagesSquare, UserCircle, ArrowRight, CheckCircle2, Award } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -79,9 +79,8 @@ export default function Home() {
           </span>
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-text-muted sm:text-lg">
-          AI Workbench is a structured, practical platform for learning AI concepts, choosing the right tool for a
-          task, using ready-made prompts, and tracking your growth with scored assessments — built for people who
-          need AI to work in their actual job, not just in theory.
+          For professionals who want to move beyond AI theory and start using it confidently in their day-to-day
+          work.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <LinkButton href="/learn" size="lg">
@@ -89,28 +88,35 @@ export default function Home() {
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </LinkButton>
           <LinkButton href="/tools" size="lg" variant="outline">
-            Try the Tool Picker
+            Tool Picker
+          </LinkButton>
+          <LinkButton href="/prompts" size="lg" variant="outline">
+            Prompt Library
           </LinkButton>
         </div>
 
-        <dl className="mt-12 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4">
-          <div>
-            <dt className="text-xs uppercase tracking-wide text-text-muted">Prompts ready to use</dt>
-            <dd className="mt-1 font-mono text-2xl font-semibold text-text">{prompts.length}+</dd>
-          </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wide text-text-muted">Tools compared</dt>
-            <dd className="mt-1 font-mono text-2xl font-semibold text-text">{aiTools.length}</dd>
-          </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wide text-text-muted">Scored assessments</dt>
-            <dd className="mt-1 font-mono text-2xl font-semibold text-text">{quizzes.length}</dd>
-          </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wide text-text-muted">Certificate threshold</dt>
-            <dd className="mt-1 font-mono text-2xl font-semibold text-secondary">80%</dd>
-          </div>
-        </dl>
+        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <Card className="text-center">
+            <Library className="mx-auto h-5 w-5 text-primary" aria-hidden="true" />
+            <p className="mt-2 font-mono text-2xl font-semibold text-text">{prompts.length}+</p>
+            <p className="mt-1 text-xs text-text-muted">Prompts ready to use</p>
+          </Card>
+          <Card className="text-center">
+            <Compass className="mx-auto h-5 w-5 text-secondary" aria-hidden="true" />
+            <p className="mt-2 font-mono text-2xl font-semibold text-text">{aiTools.length}</p>
+            <p className="mt-1 text-xs text-text-muted">Tools compared</p>
+          </Card>
+          <Card className="text-center">
+            <ClipboardCheck className="mx-auto h-5 w-5 text-accent" aria-hidden="true" />
+            <p className="mt-2 font-mono text-2xl font-semibold text-text">{quizzes.length}</p>
+            <p className="mt-1 text-xs text-text-muted">Scored assessments</p>
+          </Card>
+          <Card className="text-center">
+            <Award className="mx-auto h-5 w-5 text-primary" aria-hidden="true" />
+            <p className="mt-2 font-mono text-2xl font-semibold text-secondary">80%</p>
+            <p className="mt-1 text-xs text-text-muted">Certificate threshold</p>
+          </Card>
+        </div>
       </section>
 
       {/* Feature grid */}
