@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 function initials(name: string) {
   return name
@@ -24,6 +25,8 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const [profile] = useLocalStorage(STORAGE_KEYS.profile, DEFAULT_PROFILE);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(open, drawerRef, () => setOpen(false));
 
   return (
     <>
@@ -82,7 +85,7 @@ export function Header() {
           "fixed inset-0 z-40 xl:hidden",
           open ? "pointer-events-auto" : "pointer-events-none"
         )}
-        aria-hidden={!open}
+        inert={!open}
       >
         <div
           onClick={() => setOpen(false)}
@@ -92,6 +95,8 @@ export function Header() {
           )}
         />
         <div
+          ref={drawerRef}
+          tabIndex={-1}
           className={cn(
             "absolute inset-y-0 left-0 flex w-72 max-w-[80%] flex-col border-r border-border bg-surface transition-transform duration-200 ease-out",
             open ? "translate-x-0" : "-translate-x-full"

@@ -118,6 +118,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   if (phase === "question") {
     return (
       <div className="mx-auto max-w-2xl">
+        <h1 className="sr-only">{quiz.title}</h1>
         <ProgressBar
           value={((currentIndex + 1) / quiz.questions.length) * 100}
           label={`Question ${currentIndex + 1} of ${quiz.questions.length}`}
@@ -204,7 +205,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
                   value={certName}
                   onChange={(e) => setCertName(e.target.value)}
                   placeholder="Full name"
-                  className="focus-ring w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
+                  className="focus-ring w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
                 />
                 <Button variant="secondary" onClick={handleGenerateCertificate} disabled={!certName.trim()}>
                   <Award className="h-4 w-4" aria-hidden="true" />

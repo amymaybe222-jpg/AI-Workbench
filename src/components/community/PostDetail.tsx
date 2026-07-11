@@ -142,7 +142,7 @@ export function PostDetail({ postId }: { postId: string }) {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Share feedback or a related tip…"
-              className="focus-ring w-full resize-y rounded-lg border border-border bg-surface px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
+              className="focus-ring w-full resize-y rounded-lg border border-border bg-surface px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
             />
             <Button type="submit" className="shrink-0 sm:self-end" disabled={!comment.trim()}>
               <Send className="h-4 w-4" aria-hidden="true" />

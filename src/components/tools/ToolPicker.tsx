@@ -43,7 +43,7 @@ export function ToolPicker() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="e.g. “I need to analyse a customer feedback spreadsheet”"
-          className="focus-ring w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-text placeholder:text-text-muted/70 transition-colors focus:border-primary"
+          className="focus-ring w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-text placeholder:text-text-muted transition-colors focus:border-primary"
         />
         <button
           type="submit"

@@ -94,7 +94,7 @@ export function SettingsForm() {
             value={draft.bio}
             onChange={(e) => setDraft({ ...draft, bio: e.target.value.slice(0, BIO_MAX_LENGTH) })}
             placeholder="A short bio — what you do, and how you're using AI at work."
-            className="focus-ring mt-1.5 w-full resize-y rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
+            className="focus-ring mt-1.5 w-full resize-y rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
           />
         </div>
 
@@ -108,7 +108,7 @@ export function SettingsForm() {
             value={draft.website ?? ""}
             onChange={(e) => setDraft({ ...draft, website: e.target.value })}
             placeholder="https://your-site.com"
-            className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
+            className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
           />
         </div>
 

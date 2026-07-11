@@ -69,12 +69,12 @@ export function NewPostForm({
             placeholder="What did you build, learn, or try?"
             aria-invalid={submitAttempted && !title.trim()}
             aria-describedby="post-title-hint"
-            className={`focus-ring mt-1.5 w-full rounded-lg border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary ${
+            className={`focus-ring mt-1.5 w-full rounded-lg border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary ${
               submitAttempted && !title.trim() ? "border-accent" : "border-border"
             }`}
           />
           {submitAttempted && !title.trim() && (
-            <p id="post-title-hint" className="mt-1.5 text-xs text-accent">
+            <p id="post-title-hint" role="alert" className="mt-1.5 text-xs text-accent">
               Add a title before posting.
             </p>
           )}
@@ -105,7 +105,7 @@ export function NewPostForm({
             <option value="Other">Other</option>
           </select>
           {submitAttempted && !tool && (
-            <p id="post-tool-hint" className="mt-1.5 text-xs text-accent">
+            <p id="post-tool-hint" role="alert" className="mt-1.5 text-xs text-accent">
               Select which tool you used.
             </p>
           )}
@@ -129,12 +129,12 @@ export function NewPostForm({
             placeholder="Share context, what worked, and what feedback you're looking for… (min. 30 characters)"
             aria-invalid={submitAttempted && bodyTooShort}
             aria-describedby="post-body-hint"
-            className={`focus-ring mt-1.5 w-full resize-y rounded-lg border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary ${
+            className={`focus-ring mt-1.5 w-full resize-y rounded-lg border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary ${
               submitAttempted && bodyTooShort ? "border-accent" : "border-border"
             }`}
           />
           {submitAttempted && bodyTooShort && (
-            <p id="post-body-hint" className="mt-1.5 text-xs text-accent">
+            <p id="post-body-hint" role="alert" className="mt-1.5 text-xs text-accent">
               Add a bit more detail — at least {MIN_BODY_LENGTH} characters ({bodyLength}/{MIN_BODY_LENGTH} so far).
             </p>
           )}

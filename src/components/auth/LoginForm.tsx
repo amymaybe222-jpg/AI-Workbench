@@ -42,7 +42,7 @@ export function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@company.com"
-              className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
+              className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
             />
           </div>
           <div>
@@ -56,7 +56,7 @@ export function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
+              className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
             />
           </div>
           <Button type="submit" className="w-full" size="lg">

@@ -130,7 +130,7 @@ export function ProfileView() {
                 Edit
               </button>
             </div>
-            <h1 className="mt-4 text-lg font-semibold text-text">{profile.name}</h1>
+            <h2 className="mt-4 text-lg font-semibold text-text">{profile.name}</h2>
             <p className="text-sm text-text-muted">
               {profile.role} · {profile.team}
             </p>
