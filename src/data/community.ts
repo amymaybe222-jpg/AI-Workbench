@@ -7,6 +7,7 @@ export const communityPosts: CommunityPost[] = [
     author: "Priya Nair",
     role: "Engineering Manager",
     team: "Platform",
+    tool: "Claude",
     body:
       "I used to spend a solid 30 minutes before every retro pulling together what shipped, what slipped, and rough themes from standup notes. I started pasting our raw Slack standup thread into Claude with a prompt asking for 'what shipped, what's blocked, and recurring themes across the week' and it gets me 90% of the way there in one pass. I still read through and adjust, but it's a huge time save. Happy to share the exact prompt if useful.",
     tags: ["engineering", "productivity", "retros"],
@@ -38,6 +39,7 @@ export const communityPosts: CommunityPost[] = [
     author: "Marcus Lee",
     role: "Software Engineer II",
     team: "Payments",
+    tool: "GitHub Copilot",
     body:
       "Joined the payments team last month and the codebase has almost no comments. Instead of pinging teammates for every question, I've been asking Copilot Chat to explain functions and files before I dig deeper myself. It's dramatically cut down how many 'dumb question' Slack messages I send, and I actually retain the explanations better than a quick verbal answer in a meeting.",
     tags: ["engineering", "onboarding", "github-copilot"],
@@ -62,6 +64,7 @@ export const communityPosts: CommunityPost[] = [
     author: "Jordan Kim",
     role: "Customer Support Lead",
     team: "Support",
+    tool: "ChatGPT",
     body:
       "Drafted a first pass of 8 new canned responses using one of the Prompt Library templates and tightened the tone with two rounds of feedback. Sharing here before we roll these out team-wide — would appreciate a gut check from anyone outside Support on whether the tone reads as genuine rather than corporate. Linking the draft doc in the comments.",
     tags: ["support", "feedback wanted", "templates"],
@@ -93,6 +96,7 @@ export const communityPosts: CommunityPost[] = [
     author: "Tomasz Nowak",
     role: "Product Manager",
     team: "Growth",
+    tool: "Other",
     body:
       "Took the Prompt Engineering Basics assessment this morning (scored 86%). The question about iterating with follow-ups instead of restarting a conversation actually changed how I work — I used to open a fresh chat every time a response wasn't quite right. Small habit change, noticeably better outputs since.",
     tags: ["assessments", "learning", "prompt-engineering"],
@@ -117,6 +121,7 @@ export const communityPosts: CommunityPost[] = [
     author: "Elena Petrova",
     role: "Sales Director",
     team: "Enterprise Sales",
+    tool: "Perplexity",
     body:
       "Ahead of quarterly business reviews I use Perplexity to pull a quick, cited snapshot of what our top accounts' competitors have shipped recently. Having the citations means I can actually drop the source link into the QBR deck instead of a vague 'AI said so' bullet. Much faster than my old process of manually checking 5 different competitor blogs.",
     tags: ["sales", "research", "perplexity"],

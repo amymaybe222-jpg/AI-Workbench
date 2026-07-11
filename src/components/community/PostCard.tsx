@@ -49,7 +49,11 @@ export function PostCard({
         <span className="ml-auto shrink-0 text-xs text-text-muted">{timeAgo(post.createdAt)}</span>
       </div>
 
-      <Link href={`/community/${post.id}`} className="focus-ring mt-4 block rounded-lg">
+      <span className="mt-4 inline-flex w-fit items-center rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-white">
+        {post.tool}
+      </span>
+
+      <Link href={`/community/${post.id}`} className="focus-ring mt-2 block rounded-lg">
         <h3 className="text-base font-semibold text-text hover:text-primary">{post.title}</h3>
         <p className="mt-1.5 line-clamp-3 text-sm leading-relaxed text-text-muted">{post.body}</p>
       </Link>

@@ -94,6 +94,7 @@ export interface CommunityPost {
   author: string;
   role: string;
   team: string;
+  tool: string;
   body: string;
   tags: string[];
   createdAt: string;

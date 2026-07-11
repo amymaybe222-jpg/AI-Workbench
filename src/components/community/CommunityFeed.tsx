@@ -1,10 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, CheckCircle2 } from "lucide-react";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Modal } from "@/components/ui/Modal";
 import { PostCard } from "./PostCard";
 import { NewPostForm } from "./NewPostForm";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
@@ -13,6 +14,7 @@ export function CommunityFeed() {
   const { posts, likedIds, addPost, toggleLike } = useCommunityPosts();
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [justPosted, setJustPosted] = useState(false);
 
   const sorted = useMemo(
     () => [...posts].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
@@ -48,10 +50,22 @@ export function CommunityFeed() {
             onSubmit={(data) => {
               addPost(data);
               setShowForm(false);
+              setJustPosted(true);
             }}
           />
         </div>
       )}
+
+      <Modal open={justPosted} onClose={() => setJustPosted(false)} title="Thanks for your contribution">
+        <CheckCircle2 className="mx-auto h-10 w-10 text-secondary" aria-hidden="true" />
+        <h2 className="mt-4 text-lg font-semibold text-text">Thanks for your contribution!</h2>
+        <p className="mt-1.5 text-sm leading-relaxed text-text-muted">
+          Your post is live in the Community feed for others to learn from.
+        </p>
+        <Button className="mt-6 w-full" onClick={() => setJustPosted(false)}>
+          Done
+        </Button>
+      </Modal>
 
       {filtered.length === 0 ? (
         <Card className="mt-8 py-14 text-center text-sm text-text-muted">

@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
+import { aiTools } from "@/data/tools";
 
 const MIN_BODY_LENGTH = 30;
 
@@ -13,11 +14,20 @@ export function NewPostForm({
   onSubmit,
   onCancel,
 }: {
-  onSubmit: (data: { title: string; body: string; tags: string[]; author: string; role: string; team: string }) => void;
+  onSubmit: (data: {
+    title: string;
+    body: string;
+    tags: string[];
+    tool: string;
+    author: string;
+    role: string;
+    team: string;
+  }) => void;
   onCancel: () => void;
 }) {
   const [profile] = useLocalStorage(STORAGE_KEYS.profile, DEFAULT_PROFILE);
   const [title, setTitle] = useState("");
+  const [tool, setTool] = useState("");
   const [body, setBody] = useState("");
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
@@ -27,16 +37,18 @@ export function NewPostForm({
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitAttempted(true);
-    if (!title.trim() || bodyTooShort) return;
+    if (!title.trim() || !tool || bodyTooShort) return;
     onSubmit({
       title: title.trim(),
       body: body.trim(),
       tags: [],
+      tool,
       author: profile.name,
       role: profile.role,
       team: profile.team,
     });
     setTitle("");
+    setTool("");
     setBody("");
     setSubmitAttempted(false);
   }
@@ -55,8 +67,48 @@ export function NewPostForm({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="What did you build, learn, or try?"
-            className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary"
+            aria-invalid={submitAttempted && !title.trim()}
+            aria-describedby="post-title-hint"
+            className={`focus-ring mt-1.5 w-full rounded-lg border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted/70 focus:border-primary ${
+              submitAttempted && !title.trim() ? "border-accent" : "border-border"
+            }`}
           />
+          {submitAttempted && !title.trim() && (
+            <p id="post-title-hint" className="mt-1.5 text-xs text-accent">
+              Add a title before posting.
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="post-tool" className="text-xs font-medium text-text-muted">
+            Tool used
+          </label>
+          <select
+            id="post-tool"
+            required
+            value={tool}
+            onChange={(e) => setTool(e.target.value)}
+            aria-invalid={submitAttempted && !tool}
+            aria-describedby="post-tool-hint"
+            className={`focus-ring mt-1.5 w-full rounded-lg border bg-surface-raised px-3 py-2.5 text-base text-text focus:border-primary ${
+              submitAttempted && !tool ? "border-accent" : "border-border"
+            }`}
+          >
+            <option value="" disabled>
+              Select a tool…
+            </option>
+            {aiTools.map((t) => (
+              <option key={t.id} value={t.name}>
+                {t.name}
+              </option>
+            ))}
+            <option value="Other">Other</option>
+          </select>
+          {submitAttempted && !tool && (
+            <p id="post-tool-hint" className="mt-1.5 text-xs text-accent">
+              Select which tool you used.
+            </p>
+          )}
         </div>
         <div>
           <div className="flex items-center justify-between">

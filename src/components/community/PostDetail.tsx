@@ -73,7 +73,11 @@ export function PostDetail({ postId }: { postId: string }) {
           </div>
         </div>
 
-        <h1 className="mt-5 text-xl font-semibold text-text sm:text-2xl">{post.title}</h1>
+        <span className="mt-5 inline-flex w-fit items-center rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-white">
+          {post.tool}
+        </span>
+
+        <h1 className="mt-2 text-xl font-semibold text-text sm:text-2xl">{post.title}</h1>
         <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-text-muted sm:text-lg">{post.body}</p>
 
         <div className="mt-5 flex items-center gap-4 border-t border-border pt-4">
