@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Heart, MessageCircle } from "lucide-react";
 import { Card } from "@/components/ui/Card";
@@ -34,6 +35,16 @@ export function PostCard({
   isLiked: boolean;
   onToggleLike: (id: string) => void;
 }) {
+  const [pulse, setPulse] = useState(false);
+
+  function handleLike() {
+    if (!isLiked) {
+      setPulse(true);
+      setTimeout(() => setPulse(false), 350);
+    }
+    onToggleLike(post.id);
+  }
+
   return (
     <Card hoverable className="flex flex-col">
       <div className="flex items-center gap-3">
@@ -61,7 +72,7 @@ export function PostCard({
       <div className="mt-4 flex items-center gap-4 border-t border-border pt-4 text-sm text-text-muted">
         <button
           type="button"
-          onClick={() => onToggleLike(post.id)}
+          onClick={handleLike}
           aria-pressed={isLiked}
           aria-label={isLiked ? "Unlike this post" : "Like this post"}
           className={cn(
@@ -69,7 +80,7 @@ export function PostCard({
             isLiked ? "text-accent" : "hover:text-accent"
           )}
         >
-          <Heart className={cn("h-4 w-4", isLiked && "fill-current")} aria-hidden="true" />
+          <Heart className={cn("h-4 w-4", isLiked && "fill-current", pulse && "animate-heart-pop")} aria-hidden="true" />
           {post.likes}
         </button>
         <Link

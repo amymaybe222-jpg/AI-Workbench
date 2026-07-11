@@ -23,6 +23,7 @@ export function PostDetail({ postId }: { postId: string }) {
   const { getPost, hydrated, likedIds, toggleLike, addComment } = useCommunityPosts();
   const [profile] = useLocalStorage(STORAGE_KEYS.profile, DEFAULT_PROFILE);
   const [comment, setComment] = useState("");
+  const [pulse, setPulse] = useState(false);
 
   const post = getPost(postId);
 
@@ -42,6 +43,14 @@ export function PostDetail({ postId }: { postId: string }) {
   }
 
   const isLiked = likedIds.includes(post.id);
+
+  function handleLike() {
+    if (!isLiked) {
+      setPulse(true);
+      setTimeout(() => setPulse(false), 350);
+    }
+    toggleLike(post!.id);
+  }
 
   function handleComment(e: React.FormEvent) {
     e.preventDefault();
@@ -83,14 +92,14 @@ export function PostDetail({ postId }: { postId: string }) {
         <div className="mt-5 flex items-center gap-4 border-t border-border pt-4">
           <button
             type="button"
-            onClick={() => toggleLike(post.id)}
+            onClick={handleLike}
             aria-pressed={isLiked}
             className={cn(
               "focus-ring flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm transition-colors",
               isLiked ? "text-accent" : "text-text-muted hover:text-accent"
             )}
           >
-            <Heart className={cn("h-4 w-4", isLiked && "fill-current")} aria-hidden="true" />
+            <Heart className={cn("h-4 w-4", isLiked && "fill-current", pulse && "animate-heart-pop")} aria-hidden="true" />
             {post.likes} {post.likes === 1 ? "like" : "likes"}
           </button>
           <span className="text-sm text-text-muted">

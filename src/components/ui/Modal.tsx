@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect } from "react";
 import { X } from "lucide-react";
-import { Card } from "./Card";
+import { cn } from "@/lib/utils";
 
 interface ModalProps {
   open: boolean;
@@ -11,6 +11,9 @@ interface ModalProps {
   children: ReactNode;
 }
 
+// Stays mounted at all times (like the mobile nav drawer in Header.tsx) and
+// transitions via plain class toggles on `open` — simpler and more robust
+// than mounting/unmounting with a requestAnimationFrame-driven enter state.
 export function Modal({ open, onClose, title, children }: ModalProps) {
   useEffect(() => {
     if (!open) return;
@@ -21,12 +24,31 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={title}>
-      <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
-      <Card className="relative w-full max-w-sm text-center">
+    <div
+      className={cn(
+        "fixed inset-0 z-50 flex items-center justify-center p-4",
+        open ? "pointer-events-auto" : "pointer-events-none"
+      )}
+      role="dialog"
+      aria-modal={open}
+      aria-hidden={!open}
+      aria-label={title}
+    >
+      <div
+        className={cn(
+          "absolute inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-200 ease-out",
+          open ? "opacity-100" : "opacity-0"
+        )}
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        className={cn(
+          "relative w-full max-w-sm rounded-2xl border border-border bg-surface p-6 text-center shadow-[0_2px_12px_-4px_rgba(21,19,31,0.06)] transition-all duration-200 ease-out dark:shadow-[0_2px_14px_-4px_rgba(0,0,0,0.4)]",
+          open ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        )}
+      >
         <button
           type="button"
           onClick={onClose}
@@ -36,7 +58,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
         {children}
-      </Card>
+      </div>
     </div>
   );
 }
