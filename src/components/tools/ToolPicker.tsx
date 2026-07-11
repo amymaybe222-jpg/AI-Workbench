@@ -99,7 +99,7 @@ export function ToolPicker() {
                             href={`/learn/${tool.learnSlug}`}
                             className="focus-ring mt-3 inline-block text-sm font-medium text-primary hover:text-primary-hover"
                           >
-                            Learn more →
+                            See how {tool.name} works →
                           </Link>
                         )}
                       </div>

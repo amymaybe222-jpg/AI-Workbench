@@ -12,36 +12,42 @@ const features = [
     icon: BookOpen,
     title: "Learn AI",
     description: "Concise, practical explanations of core AI concepts and the tools your team already uses.",
+    cta: "Start with the basics",
   },
   {
     href: "/tools",
     icon: Compass,
     title: "Tool Picker",
     description: "Describe a task in plain language and get a ranked shortlist of the right AI tool for the job.",
+    cta: "Find your tool",
   },
   {
     href: "/prompts",
     icon: Library,
     title: "Prompt Library",
     description: "Categorized, copy-ready prompts for engineering, support, sales, leadership, and more.",
+    cta: "Browse the prompts",
   },
   {
     href: "/assessments",
     icon: ClipboardCheck,
     title: "Assessments",
     description: "Short scored quizzes that check your understanding and award a certificate at 80% or above.",
+    cta: "Test your knowledge",
   },
   {
     href: "/community",
     icon: MessagesSquare,
     title: "Community",
     description: "See how colleagues are applying AI day to day, and get feedback on your own approach.",
+    cta: "See what's working",
   },
   {
     href: "/profile",
     icon: UserCircle,
     title: "Profile & Portfolio",
     description: "Track completed assessments, certificates earned, and prompts you have saved over time.",
+    cta: "Track your progress",
   },
 ];
 
@@ -137,7 +143,7 @@ export default function Home() {
                 <h3 className="mt-4 text-base font-semibold text-text">{feature.title}</h3>
                 <p className="mt-4 text-sm leading-relaxed text-text-muted">{feature.description}</p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary opacity-80 transition-opacity group-hover:opacity-100">
-                  Explore <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  {feature.cta} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
               </a>
             </Card>

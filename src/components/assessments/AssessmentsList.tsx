@@ -38,7 +38,7 @@ export function AssessmentsList() {
                   <Clock className="h-3.5 w-3.5" aria-hidden="true" />~{quiz.estimatedMinutes} min
                 </span>
                 <span className="inline-flex items-center gap-1 text-sm font-medium text-primary opacity-80 transition-opacity group-hover:opacity-100">
-                  {result ? "Retake" : "Start"} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  {result ? "Retake quiz" : "Begin quiz"} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
               </div>
             </Link>
