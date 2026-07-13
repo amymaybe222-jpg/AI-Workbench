@@ -10,8 +10,6 @@ import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
 import { UserProfile } from "@/types";
 
-const BIO_MAX_LENGTH = 200;
-
 export function SettingsForm() {
   const router = useRouter();
   const { isLoggedIn, hydrated: authHydrated, logout } = useAuth();
@@ -43,7 +41,7 @@ export function SettingsForm() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setProfile((prev) => ({ ...prev, name: draft.name, bio: draft.bio, website: draft.website }));
+    setProfile((prev) => ({ ...prev, name: draft.name, website: draft.website }));
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   }
@@ -71,30 +69,6 @@ export function SettingsForm() {
             value={draft.name}
             onChange={(e) => setDraft({ ...draft, name: e.target.value })}
             className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text focus:border-primary"
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center justify-between">
-            <label htmlFor="settings-bio" className="text-xs font-medium text-text-muted">
-              Bio
-            </label>
-            <span
-              className={`text-xs ${
-                draft.bio.length >= BIO_MAX_LENGTH ? "text-accent" : "text-text-muted"
-              }`}
-            >
-              {draft.bio.length}/{BIO_MAX_LENGTH}
-            </span>
-          </div>
-          <textarea
-            id="settings-bio"
-            rows={4}
-            maxLength={BIO_MAX_LENGTH}
-            value={draft.bio}
-            onChange={(e) => setDraft({ ...draft, bio: e.target.value.slice(0, BIO_MAX_LENGTH) })}
-            placeholder="A short bio — what you do, and how you're using AI at work."
-            className="focus-ring mt-1.5 w-full resize-y rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
           />
         </div>
 

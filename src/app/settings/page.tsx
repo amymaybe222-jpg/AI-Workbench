@@ -4,7 +4,7 @@ import { SettingsForm } from "@/components/settings/SettingsForm";
 
 export const metadata: Metadata = {
   title: "Settings",
-  description: "Edit your AI Workbench display name, bio, and website link.",
+  description: "Edit your AI Workbench display name and website link.",
 };
 
 export default function SettingsPage() {
@@ -13,7 +13,7 @@ export default function SettingsPage() {
       <PageHeader
         eyebrow="Settings"
         title="Edit your profile"
-        description="Update how you appear across AI Workbench — your display name, a short bio, and a website link."
+        description="Update how you appear across AI Workbench — your display name and a website link."
       />
       <SettingsForm />
     </div>
