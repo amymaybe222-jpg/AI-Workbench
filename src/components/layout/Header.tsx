@@ -11,6 +11,7 @@ import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useFocusTrap } from "@/lib/useFocusTrap";
+import { HeaderSearch } from "./HeaderSearch";
 
 function initials(name: string) {
   return name
@@ -65,15 +66,14 @@ export function Header() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-3">
+            <HeaderSearch />
             <ThemeToggle />
             <Link
               href="/profile"
-              className="focus-ring flex items-center gap-2.5 rounded-full border border-border bg-surface py-1 pl-1 pr-3 transition-colors hover:border-primary/40"
+              aria-label={`View profile (${profile.name})`}
+              className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-xs font-semibold text-primary transition-colors hover:border-primary/40"
             >
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold text-primary">
-                {initials(profile.name)}
-              </span>
-              <span className="hidden text-sm font-medium text-text sm:inline">{profile.name}</span>
+              {initials(profile.name)}
             </Link>
           </div>
         </div>
