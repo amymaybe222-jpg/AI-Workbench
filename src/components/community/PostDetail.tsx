@@ -133,6 +133,7 @@ export function PostDetail({ postId }: { postId: string }) {
   const [pulse, setPulse] = useState(false);
   const [editingPost, setEditingPost] = useState(false);
   const [confirmingDeletePost, setConfirmingDeletePost] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   const post = getPost(postId);
 
@@ -166,11 +167,16 @@ export function PostDetail({ postId }: { postId: string }) {
     toggleLike(post!.id);
   }
 
-  function handleComment(e: React.FormEvent) {
+  async function handleComment(e: React.FormEvent) {
     e.preventDefault();
     if (!comment.trim()) return;
-    addComment(post!.id, { author: profile.name, role: profile.role, body: comment.trim() });
-    setComment("");
+    setActionError(null);
+    try {
+      await addComment(post!.id, { author: profile.name, role: profile.role, body: comment.trim() });
+      setComment("");
+    } catch {
+      setActionError("Couldn't post your comment. Please try again.");
+    }
   }
 
   if (editingPost) {
@@ -180,9 +186,14 @@ export function PostDetail({ postId }: { postId: string }) {
           initial={{ title: post.title, tool: post.tool ?? "", body: post.body }}
           submitLabel="Save"
           onCancel={() => setEditingPost(false)}
-          onSubmit={(data) => {
-            updatePost(post.id, { title: data.title, body: data.body, tags: data.tags, tool: data.tool });
-            setEditingPost(false);
+          onSubmit={async (data) => {
+            setActionError(null);
+            try {
+              await updatePost(post.id, { title: data.title, body: data.body, tags: data.tags, tool: data.tool });
+              setEditingPost(false);
+            } catch {
+              setActionError("Couldn't save your changes. Please try again.");
+            }
           }}
         />
       </div>
@@ -198,6 +209,12 @@ export function PostDetail({ postId }: { postId: string }) {
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to Community
       </Link>
+
+      {actionError && (
+        <p role="alert" className="mb-4 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2 text-sm text-accent">
+          {actionError}
+        </p>
+      )}
 
       <Card>
         <div className="flex items-center gap-3">
@@ -268,8 +285,10 @@ export function PostDetail({ postId }: { postId: string }) {
               key={c.id}
               comment={c}
               canEdit={!!currentUserId && c.owner_id === currentUserId}
-              onUpdate={(body) => updateComment(c.id, body)}
-              onDelete={() => deleteComment(c.id)}
+              onUpdate={(body) =>
+                updateComment(c.id, body).catch(() => setActionError("Couldn't save your comment. Please try again."))
+              }
+              onDelete={() => deleteComment(c.id).catch(() => setActionError("Couldn't delete your comment. Please try again."))}
             />
           ))}
           {post.comments.length === 0 && (
@@ -317,10 +336,14 @@ export function PostDetail({ postId }: { postId: string }) {
         title="Delete this post?"
         description="This will remove the post and its comments. This can't be undone."
         onCancel={() => setConfirmingDeletePost(false)}
-        onConfirm={() => {
+        onConfirm={async () => {
           setConfirmingDeletePost(false);
-          deletePost(post.id);
-          router.push("/community");
+          try {
+            await deletePost(post.id);
+            router.push("/community");
+          } catch {
+            setActionError("Couldn't delete your post. Please try again.");
+          }
         }}
       />
     </div>

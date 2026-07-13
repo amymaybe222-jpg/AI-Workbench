@@ -72,7 +72,7 @@ export function useCommunityPosts() {
   }) {
     if (!currentUserId) return undefined;
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("posts")
       .insert({
         user_id: currentUserId,
@@ -89,6 +89,8 @@ export function useCommunityPosts() {
       .select()
       .single();
 
+    if (error) throw error;
+
     await load();
     return data?.id as string | undefined;
   }
@@ -97,37 +99,42 @@ export function useCommunityPosts() {
     postId: string,
     patch: { title: string; body: string; tags: string[]; tool: string }
   ) {
-    await supabase
+    const { error } = await supabase
       .from("posts")
       .update({ title: patch.title, body: patch.body, tags: patch.tags, tool: patch.tool })
       .eq("id", postId);
+    if (error) throw error;
     await load();
   }
 
   async function deletePost(postId: string) {
-    await supabase.from("posts").delete().eq("id", postId);
+    const { error } = await supabase.from("posts").delete().eq("id", postId);
+    if (error) throw error;
     await load();
   }
 
   async function addComment(postId: string, comment: { author: string; role: string; body: string }) {
     if (!currentUserId) return;
-    await supabase.from("comments").insert({
+    const { error } = await supabase.from("comments").insert({
       post_id: postId,
       owner_id: currentUserId,
       author: comment.author,
       role: comment.role,
       body: comment.body,
     });
+    if (error) throw error;
     await load();
   }
 
   async function updateComment(commentId: string, body: string) {
-    await supabase.from("comments").update({ body }).eq("id", commentId);
+    const { error } = await supabase.from("comments").update({ body }).eq("id", commentId);
+    if (error) throw error;
     await load();
   }
 
   async function deleteComment(commentId: string) {
-    await supabase.from("comments").delete().eq("id", commentId);
+    const { error } = await supabase.from("comments").delete().eq("id", commentId);
+    if (error) throw error;
     await load();
   }
 

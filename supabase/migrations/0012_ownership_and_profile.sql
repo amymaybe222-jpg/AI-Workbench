@@ -17,6 +17,25 @@ alter table public.comments
 create index if not exists idx_posts_owner_id on public.posts (owner_id);
 create index if not exists idx_comments_owner_id on public.comments (owner_id);
 
+-- posts_with_like_counts (migration 0004) was created with `p.*` before
+-- owner_id existed — Postgres freezes a view's column list at creation
+-- time, so adding the column to the table above doesn't add it to the
+-- view. `create or replace view` can only append columns at the end, and
+-- owner_id lands before like_count in p.*'s expansion, so it must be
+-- dropped and recreated rather than replaced.
+drop view if exists public.posts_with_like_counts;
+
+create view public.posts_with_like_counts as
+select
+  p.*,
+  coalesce(l.like_count, 0) as like_count
+from public.posts p
+left join (
+  select post_id, count(*) as like_count
+  from public.post_likes
+  group by post_id
+) l on l.post_id = p.id;
+
 -- post_likes.user_id pointed at the fake public.users table (migration 0001).
 -- The table is seeded empty (migration 0004), so it's safe to repoint the FK
 -- at the real auth.users table.
@@ -39,15 +58,18 @@ alter table public.profiles
 -- ─────────────────────────────
 -- posts: ownership-scoped writes
 -- ─────────────────────────────
+drop policy if exists "Owners can insert posts" on public.posts;
 create policy "Owners can insert posts"
   on public.posts for insert
   with check (auth.uid() is not null and owner_id = auth.uid());
 
+drop policy if exists "Owners can update own posts" on public.posts;
 create policy "Owners can update own posts"
   on public.posts for update
   using (owner_id = auth.uid())
   with check (owner_id = auth.uid());
 
+drop policy if exists "Owners can delete own posts" on public.posts;
 create policy "Owners can delete own posts"
   on public.posts for delete
   using (owner_id = auth.uid());
@@ -58,15 +80,18 @@ create policy "Owners can delete own posts"
 drop policy if exists "Public can insert comments (demo, no auth)" on public.comments;
 drop policy if exists "Public can delete comments (demo, no auth)" on public.comments;
 
+drop policy if exists "Owners can insert comments" on public.comments;
 create policy "Owners can insert comments"
   on public.comments for insert
   with check (auth.uid() is not null and owner_id = auth.uid());
 
+drop policy if exists "Owners can update own comments" on public.comments;
 create policy "Owners can update own comments"
   on public.comments for update
   using (owner_id = auth.uid())
   with check (owner_id = auth.uid());
 
+drop policy if exists "Owners can delete own comments" on public.comments;
 create policy "Owners can delete own comments"
   on public.comments for delete
   using (owner_id = auth.uid());
@@ -77,10 +102,12 @@ create policy "Owners can delete own comments"
 drop policy if exists "Public can insert post likes (demo, no auth)" on public.post_likes;
 drop policy if exists "Public can delete post likes (demo, no auth)" on public.post_likes;
 
+drop policy if exists "Owners can insert own post likes" on public.post_likes;
 create policy "Owners can insert own post likes"
   on public.post_likes for insert
   with check (auth.uid() = user_id);
 
+drop policy if exists "Owners can delete own post likes" on public.post_likes;
 create policy "Owners can delete own post likes"
   on public.post_likes for delete
   using (auth.uid() = user_id);
@@ -110,6 +137,7 @@ create trigger protect_profile_role_trigger
   before update on public.profiles
   for each row execute function public.protect_profile_role();
 
+drop policy if exists "Users can update own profile" on public.profiles;
 create policy "Users can update own profile"
   on public.profiles for update
   using (auth.uid() = id)

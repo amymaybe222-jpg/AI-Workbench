@@ -19,6 +19,7 @@ export function CommunityFeed() {
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [justPosted, setJustPosted] = useState(false);
+  const [postError, setPostError] = useState<string | null>(null);
 
   const sorted = useMemo(
     () => [...posts].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()),
@@ -66,12 +67,22 @@ export function CommunityFeed() {
 
       {showForm && (
         <div className="mt-6">
+          {postError && (
+            <p role="alert" className="mb-3 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2 text-sm text-accent">
+              {postError}
+            </p>
+          )}
           <NewPostForm
             onCancel={() => setShowForm(false)}
-            onSubmit={(data) => {
-              addPost(data);
-              setShowForm(false);
-              setJustPosted(true);
+            onSubmit={async (data) => {
+              setPostError(null);
+              try {
+                await addPost(data);
+                setShowForm(false);
+                setJustPosted(true);
+              } catch {
+                setPostError("Couldn't publish your post. Please try again.");
+              }
             }}
           />
         </div>
