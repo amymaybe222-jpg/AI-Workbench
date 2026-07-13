@@ -11,6 +11,7 @@ import { useProfile } from "@/lib/useProfile";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Avatar } from "@/components/ui/Avatar";
 import { useFocusTrap } from "@/lib/useFocusTrap";
+import { useBodyScrollLock } from "@/lib/useBodyScrollLock";
 import { HeaderSearch } from "./HeaderSearch";
 
 export function Header() {
@@ -21,6 +22,7 @@ export function Header() {
   const displayName = profile.name || "Profile";
   const drawerRef = useRef<HTMLDivElement>(null);
   useFocusTrap(open, drawerRef, () => setOpen(false));
+  useBodyScrollLock(open);
 
   useEffect(() => {
     if (!mobileSearchOpen) return;

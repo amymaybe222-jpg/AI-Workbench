@@ -4,6 +4,7 @@ import { ReactNode, useRef } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useFocusTrap } from "@/lib/useFocusTrap";
+import { useBodyScrollLock } from "@/lib/useBodyScrollLock";
 
 interface ModalProps {
   open: boolean;
@@ -21,6 +22,7 @@ interface ModalProps {
 export function Modal({ open, onClose, title, children, className }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   useFocusTrap(open, panelRef, onClose);
+  useBodyScrollLock(open);
 
   return (
     <div

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Award, ArrowRight, Clock, ListChecks } from "lucide-react";
+import { Award, ArrowRight, Clock, ListChecks, ClipboardX } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { supabase, DEMO_USER_ID } from "@/lib/supabase";
@@ -11,6 +11,7 @@ import { Quiz, QuizQuestion, QuizResult } from "@/types";
 export function AssessmentsList() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [bestResults, setBestResults] = useState<Map<string, QuizResult>>(new Map());
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
@@ -46,9 +47,24 @@ export function AssessmentsList() {
         if (!existing || r.score_percent > existing.score_percent) best.set(r.quiz_id, r);
       }
       setBestResults(best);
+      setLoading(false);
     }
     load();
   }, []);
+
+  if (loading) {
+    return <p className="text-sm text-text-muted">Loading assessments…</p>;
+  }
+
+  if (quizzes.length === 0) {
+    return (
+      <Card className="flex flex-col items-center gap-3 py-14 text-center">
+        <ClipboardX className="h-8 w-8 text-text-muted" aria-hidden="true" />
+        <p className="text-sm font-medium text-text">No assessments available yet.</p>
+        <p className="max-w-sm text-sm text-text-muted">Check back soon — new assessments are added regularly.</p>
+      </Card>
+    );
+  }
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { PackageSearch } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { supabase } from "@/lib/supabase";
@@ -9,14 +10,32 @@ import { AiTool } from "@/types";
 
 export function ToolCatalog() {
   const [tools, setTools] = useState<AiTool[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     supabase
       .from("tools")
       .select("*")
       .order("name")
-      .then(({ data }) => setTools((data as AiTool[]) ?? []));
+      .then(({ data }) => {
+        setTools((data as AiTool[]) ?? []);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return <p className="text-sm text-text-muted">Loading tools…</p>;
+  }
+
+  if (tools.length === 0) {
+    return (
+      <Card className="flex flex-col items-center gap-3 py-14 text-center">
+        <PackageSearch className="h-8 w-8 text-text-muted" aria-hidden="true" />
+        <p className="text-sm font-medium text-text">No tools available yet.</p>
+        <p className="max-w-sm text-sm text-text-muted">Check back soon — new tools are added regularly.</p>
+      </Card>
+    );
+  }
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, CheckCircle2 } from "lucide-react";
+import { Plus, CheckCircle2, MessagesSquare } from "lucide-react";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -44,7 +44,7 @@ export function CommunityFeed() {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <SearchInput
-          placeholder="Search here"
+          placeholder="Search posts by title, content, or author…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           aria-label="Search community posts"
@@ -100,8 +100,14 @@ export function CommunityFeed() {
       </Modal>
 
       {filtered.length === 0 ? (
-        <Card className="mt-8 py-14 text-center text-sm text-text-muted">
-          No posts match yet — be the first to share something.
+        <Card className="mt-6 flex flex-col items-center gap-3 py-14 text-center">
+          <MessagesSquare className="h-8 w-8 text-text-muted" aria-hidden="true" />
+          <p className="text-sm font-medium text-text">
+            {search.trim() ? "No posts match your search." : "No posts yet."}
+          </p>
+          <p className="max-w-sm text-sm text-text-muted">
+            {search.trim() ? "Try a different keyword or clear the search." : "Be the first to share something with the team."}
+          </p>
         </Card>
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
