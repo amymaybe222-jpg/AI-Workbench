@@ -10,6 +10,7 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   children: ReactNode;
+  className?: string;
 }
 
 // Stays mounted at all times (like the mobile nav drawer in Header.tsx) and
@@ -17,7 +18,7 @@ interface ModalProps {
 // than mounting/unmounting with a requestAnimationFrame-driven enter state.
 // `inert` (rather than aria-hidden) keeps the panel's contents out of the
 // a11y tree AND out of the tab order while closed, since it stays mounted.
-export function Modal({ open, onClose, title, children }: ModalProps) {
+export function Modal({ open, onClose, title, children, className }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   useFocusTrap(open, panelRef, onClose);
 
@@ -45,7 +46,8 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         tabIndex={-1}
         className={cn(
           "relative w-full max-w-sm rounded-2xl border border-border bg-surface p-6 text-center shadow-[0_2px_12px_-4px_rgba(21,19,31,0.06)] transition-all duration-200 ease-out dark:shadow-[0_2px_14px_-4px_rgba(0,0,0,0.4)]",
-          open ? "scale-100 opacity-100" : "scale-95 opacity-0"
+          open ? "scale-100 opacity-100" : "scale-95 opacity-0",
+          className
         )}
       >
         <button

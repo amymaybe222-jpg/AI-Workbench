@@ -13,6 +13,7 @@ const productLinks = [
 const companyLinks = [
   { href: "/about", label: "About" },
   { href: "/team", label: "Meet the team" },
+  { href: "/admin/prompts", label: "Admin" },
 ];
 
 const legalLinks = [

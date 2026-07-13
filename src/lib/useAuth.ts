@@ -16,3 +16,12 @@ export function useAuth() {
     logout: () => setIsLoggedIn(false),
   };
 }
+
+// Placeholder until real auth exists. There's no session or role concept yet
+// (see the comment above), so this intentionally always returns false —
+// admin pages stay restricted for everyone until this is wired up to a real
+// admin-role check (e.g. a Supabase Auth session with `users.role === "admin"`).
+export function useIsAdmin() {
+  const { hydrated } = useAuth();
+  return { isAdmin: false, hydrated };
+}
