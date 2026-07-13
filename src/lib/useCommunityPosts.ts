@@ -84,7 +84,6 @@ export function useCommunityPosts() {
         author: post.author,
         role: post.role,
         team: post.team,
-        published_at: new Date().toISOString(),
       })
       .select()
       .single();
