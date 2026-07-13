@@ -1,13 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Sparkles, SearchX } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Chip } from "@/components/ui/Chip";
-import { matchTasks } from "@/data/toolTasks";
-import { getToolById } from "@/data/tools";
+import { matchTasks } from "@/lib/matchTasks";
+import { supabase } from "@/lib/supabase";
+import { AiTool, ToolTaskRow } from "@/types";
 
 const quickPrompts = [
   "Write and reply to customer emails",
@@ -18,8 +19,24 @@ const quickPrompts = [
 export function ToolPicker() {
   const [query, setQuery] = useState("");
   const [submitted, setSubmitted] = useState("");
+  const [tasks, setTasks] = useState<ToolTaskRow[]>([]);
+  const [tools, setTools] = useState<Map<string, AiTool>>(new Map());
 
-  const matches = useMemo(() => matchTasks(submitted, 2), [submitted]);
+  useEffect(() => {
+    async function load() {
+      const [tasksRes, toolsRes] = await Promise.all([
+        supabase.from("tool_tasks").select("*"),
+        supabase.from("tools").select("*"),
+      ]);
+      setTasks((tasksRes.data as ToolTaskRow[]) ?? []);
+      const map = new Map<string, AiTool>();
+      for (const t of (toolsRes.data as AiTool[]) ?? []) map.set(t.id, t);
+      setTools(map);
+    }
+    load();
+  }, []);
+
+  const matches = useMemo(() => matchTasks(tasks, submitted, 2), [tasks, submitted]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -84,8 +101,8 @@ export function ToolPicker() {
                 <p className="mt-2 text-sm leading-relaxed text-text-muted">{task.reasoning}</p>
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  {task.recommendedToolIds.map((toolId, i) => {
-                    const tool = getToolById(toolId);
+                  {task.recommended_tool_ids.map((toolId, i) => {
+                    const tool = tools.get(toolId);
                     if (!tool) return null;
                     return (
                       <div key={toolId} className="rounded-lg border border-border bg-surface-raised p-4">
@@ -94,9 +111,9 @@ export function ToolPicker() {
                           {i === 0 && <Badge tone="secondary">Top pick</Badge>}
                         </div>
                         <p className="mt-1.5 text-sm leading-relaxed text-text-muted">{tool.description}</p>
-                        {tool.learnSlug && (
+                        {tool.learn_slug && (
                           <Link
-                            href={`/learn/${tool.learnSlug}`}
+                            href={`/learn/${tool.learn_slug}`}
                             className="focus-ring mt-3 inline-block text-sm font-medium text-primary hover:text-primary-hover"
                           >
                             See how {tool.name} works →

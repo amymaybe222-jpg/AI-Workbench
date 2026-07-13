@@ -3,21 +3,24 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useLocalStorage } from "@/lib/useLocalStorage";
-import { STORAGE_KEYS } from "@/lib/storageKeys";
 
-export function LikeButton({ promptId, baseLikes }: { promptId: string; baseLikes: number }) {
-  const [likedIds, setLikedIds] = useLocalStorage<string[]>(STORAGE_KEYS.likedPrompts, []);
+export function LikeButton({
+  isLiked,
+  likeCount,
+  onToggle,
+}: {
+  isLiked: boolean;
+  likeCount: number;
+  onToggle: () => void;
+}) {
   const [pulse, setPulse] = useState(false);
-  const isLiked = likedIds.includes(promptId);
-  const displayLikes = baseLikes + (isLiked ? 1 : 0);
 
   function toggle() {
     if (!isLiked) {
       setPulse(true);
       setTimeout(() => setPulse(false), 350);
     }
-    setLikedIds((prev) => (prev.includes(promptId) ? prev.filter((id) => id !== promptId) : [...prev, promptId]));
+    onToggle();
   }
 
   return (
@@ -37,7 +40,7 @@ export function LikeButton({ promptId, baseLikes }: { promptId: string; baseLike
         className={cn("h-3.5 w-3.5", isLiked && "fill-current", pulse && "animate-heart-pop")}
         aria-hidden="true"
       />
-      {displayLikes}
+      {likeCount}
     </button>
   );
 }

@@ -77,7 +77,7 @@ export function PostDetail({ postId }: { postId: string }) {
           <div>
             <p className="text-sm font-medium text-text">{post.author}</p>
             <p className="text-xs text-text-muted">
-              {post.role} · {post.team} · {formatDate(post.createdAt)}
+              {post.role} · {post.team} · {formatDate(post.created_at)}
             </p>
           </div>
         </div>
@@ -100,7 +100,7 @@ export function PostDetail({ postId }: { postId: string }) {
             )}
           >
             <Heart className={cn("h-4 w-4", isLiked && "fill-current", pulse && "animate-heart-pop")} aria-hidden="true" />
-            {post.likes} {post.likes === 1 ? "like" : "likes"}
+            {post.like_count} {post.like_count === 1 ? "like" : "likes"}
           </button>
           <span className="text-sm text-text-muted">
             {post.comments.length} {post.comments.length === 1 ? "comment" : "comments"}
@@ -121,7 +121,7 @@ export function PostDetail({ postId }: { postId: string }) {
                 </span>
                 <p className="text-sm font-medium text-text">{c.author}</p>
                 <p className="text-xs text-text-muted">{c.role}</p>
-                <span className="ml-auto text-xs text-text-muted">{formatDate(c.createdAt)}</span>
+                <span className="ml-auto text-xs text-text-muted">{formatDate(c.created_at)}</span>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-text-muted">{c.body}</p>
             </Card>

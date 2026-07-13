@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Award, BookMarked, MessagesSquare, Pencil, Save, Target } from "lucide-react";
 import { Card } from "@/components/ui/Card";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
+import { supabase, DEMO_USER_ID } from "@/lib/supabase";
 import { downloadCertificate } from "@/lib/certificate";
 import { QuizResult, UserProfile } from "@/types";
 
@@ -18,17 +19,45 @@ function initials(name: string) {
 
 export function ProfileView() {
   const [profile, setProfile] = useLocalStorage<UserProfile>(STORAGE_KEYS.profile, DEFAULT_PROFILE);
-  const [results] = useLocalStorage<QuizResult[]>(STORAGE_KEYS.quizResults, []);
-  const [savedPrompts] = useLocalStorage<string[]>(STORAGE_KEYS.savedPrompts, []);
+  const [results, setResults] = useState<QuizResult[]>([]);
+  const [savedPromptCount, setSavedPromptCount] = useState(0);
   const { posts } = useCommunityPosts();
 
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<UserProfile>(profile);
 
+  useEffect(() => {
+    async function load() {
+      const [resultsRes, savedRes] = await Promise.all([
+        supabase
+          .from("quiz_results")
+          .select("*, quizzes(title)")
+          .eq("user_id", DEMO_USER_ID)
+          .order("completed_at", { ascending: false }),
+        supabase.from("saved_prompts").select("prompt_id", { count: "exact", head: true }).eq("user_id", DEMO_USER_ID),
+      ]);
+
+      const mapped: QuizResult[] = (resultsRes.data ?? []).map((r) => ({
+        id: r.id,
+        user_id: r.user_id,
+        quiz_id: r.quiz_id,
+        quiz_title: r.quizzes?.title ?? r.quiz_id,
+        score_percent: r.score_percent,
+        correct_count: r.correct_count,
+        total_questions: r.total_questions,
+        completed_at: r.completed_at,
+        certificate_name: r.certificate_name,
+      }));
+      setResults(mapped);
+      setSavedPromptCount(savedRes.count ?? 0);
+    }
+    load();
+  }, []);
+
   const myPosts = posts.filter((p) => p.author === profile.name);
-  const certificates = results.filter((r) => r.scorePercent >= 80 && r.certificateName);
+  const certificates = results.filter((r) => r.score_percent >= 80 && r.certificate_name);
   const avgScore = results.length
-    ? Math.round(results.reduce((sum, r) => sum + r.scorePercent, 0) / results.length)
+    ? Math.round(results.reduce((sum, r) => sum + r.score_percent, 0) / results.length)
     : 0;
 
   function startEditing() {
@@ -44,10 +73,10 @@ export function ProfileView() {
 
   function redownload(result: QuizResult) {
     downloadCertificate({
-      name: result.certificateName || profile.name,
-      quizTitle: result.quizTitle,
-      scorePercent: result.scorePercent,
-      date: new Date(result.completedAt).toLocaleDateString(undefined, {
+      name: result.certificate_name || profile.name,
+      quizTitle: result.quiz_title,
+      scorePercent: result.score_percent,
+      date: new Date(result.completed_at).toLocaleDateString(undefined, {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -163,7 +192,7 @@ export function ProfileView() {
           </Card>
           <Card className="text-center">
             <BookMarked className="mx-auto h-5 w-5 text-accent" aria-hidden="true" />
-            <p className="mt-2 font-mono text-xl font-semibold text-text">{savedPrompts.length}</p>
+            <p className="mt-2 font-mono text-xl font-semibold text-text">{savedPromptCount}</p>
             <p className="text-xs text-text-muted">Prompts saved</p>
           </Card>
           <Card className="text-center">
@@ -189,17 +218,17 @@ export function ProfileView() {
             <div className="mt-4 space-y-3">
               {results.map((r) => (
                 <div
-                  key={r.quizId}
+                  key={r.id}
                   className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-surface-raised p-3"
                 >
                   <div>
-                    <p className="text-sm font-medium text-text">{r.quizTitle}</p>
+                    <p className="text-sm font-medium text-text">{r.quiz_title}</p>
                     <p className="text-xs text-text-muted">
-                      {r.correctCount}/{r.totalQuestions} correct ·{" "}
-                      {new Date(r.completedAt).toLocaleDateString()}
+                      {r.correct_count}/{r.total_questions} correct ·{" "}
+                      {new Date(r.completed_at).toLocaleDateString()}
                     </p>
                   </div>
-                  <Badge tone={r.scorePercent >= 80 ? "secondary" : "neutral"}>{r.scorePercent}%</Badge>
+                  <Badge tone={r.score_percent >= 80 ? "secondary" : "neutral"}>{r.score_percent}%</Badge>
                 </div>
               ))}
             </div>
@@ -216,15 +245,15 @@ export function ProfileView() {
             <div className="mt-4 space-y-3">
               {certificates.map((r) => (
                 <div
-                  key={r.quizId}
+                  key={r.id}
                   className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-secondary/25 bg-secondary/[0.04] p-3"
                 >
                   <div className="flex items-center gap-3">
                     <Award className="h-5 w-5 text-secondary" aria-hidden="true" />
                     <div>
-                      <p className="text-sm font-medium text-text">{r.quizTitle}</p>
+                      <p className="text-sm font-medium text-text">{r.quiz_title}</p>
                       <p className="text-xs text-text-muted">
-                        {r.certificateName} · {r.scorePercent}%
+                        {r.certificate_name} · {r.score_percent}%
                       </p>
                     </div>
                   </div>

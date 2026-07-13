@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
-import { aiTools } from "@/data/tools";
+import { supabase } from "@/lib/supabase";
+import { AiTool } from "@/types";
 
 const MIN_BODY_LENGTH = 30;
 
@@ -30,6 +31,15 @@ export function NewPostForm({
   const [tool, setTool] = useState("");
   const [body, setBody] = useState("");
   const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [tools, setTools] = useState<AiTool[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("tools")
+      .select("*")
+      .order("name")
+      .then(({ data }) => setTools((data as AiTool[]) ?? []));
+  }, []);
 
   const bodyLength = body.trim().length;
   const bodyTooShort = bodyLength < MIN_BODY_LENGTH;
@@ -97,7 +107,7 @@ export function NewPostForm({
             <option value="" disabled>
               Select a tool…
             </option>
-            {aiTools.map((t) => (
+            {tools.map((t) => (
               <option key={t.id} value={t.name}>
                 {t.name}
               </option>

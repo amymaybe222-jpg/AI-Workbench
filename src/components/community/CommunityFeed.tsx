@@ -17,7 +17,7 @@ export function CommunityFeed() {
   const [justPosted, setJustPosted] = useState(false);
 
   const sorted = useMemo(
-    () => [...posts].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+    () => [...posts].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()),
     [posts]
   );
 

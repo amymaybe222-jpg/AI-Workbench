@@ -5,11 +5,22 @@ import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { learnTopics, getLearnTopic } from "@/data/learn";
-import { getToolById } from "@/data/tools";
+import { supabase } from "@/lib/supabase";
+import { AiTool, LearnTopic } from "@/types";
 
-export function generateStaticParams() {
-  return learnTopics.map((topic) => ({ slug: topic.slug }));
+export async function generateStaticParams() {
+  const { data } = await supabase.from("learn_topics").select("slug");
+  return (data ?? []).map((topic) => ({ slug: topic.slug }));
+}
+
+async function getLearnTopic(slug: string) {
+  const { data } = await supabase.from("learn_topics").select("*").eq("slug", slug).maybeSingle();
+  return data as LearnTopic | null;
+}
+
+async function getToolById(id: string) {
+  const { data } = await supabase.from("tools").select("*").eq("id", id).maybeSingle();
+  return data as AiTool | null;
 }
 
 export async function generateMetadata({
@@ -18,7 +29,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const topic = getLearnTopic(slug);
+  const topic = await getLearnTopic(slug);
   if (!topic) return {};
   return {
     title: topic.title,
@@ -28,10 +39,10 @@ export async function generateMetadata({
 
 export default async function LearnTopicPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const topic = getLearnTopic(slug);
+  const topic = await getLearnTopic(slug);
   if (!topic) notFound();
 
-  const relatedTool = topic.relatedTools?.[0] ? getToolById(topic.relatedTools[0]) : undefined;
+  const relatedTool = topic.related_tool_slugs?.[0] ? await getToolById(topic.related_tool_slugs[0]) : undefined;
 
   return (
     <div>
@@ -47,7 +58,7 @@ export default async function LearnTopicPage({ params }: { params: Promise<{ slu
         <article>
           <div className="mb-3 flex items-center gap-2">
             <Badge tone={topic.category === "Foundations" ? "primary" : "secondary"}>{topic.category}</Badge>
-            <span className="text-xs text-text-muted">{topic.readTime} read</span>
+            <span className="text-xs text-text-muted">{topic.read_time} read</span>
           </div>
           <h1 className="text-2xl font-semibold tracking-tight text-text sm:text-3xl">{topic.title}</h1>
           <p className="mt-3 text-base leading-relaxed text-text-muted">{topic.summary}</p>
@@ -70,7 +81,7 @@ export default async function LearnTopicPage({ params }: { params: Promise<{ slu
           <Card className="mt-10 border-secondary/25 bg-secondary/[0.04]">
             <h2 className="text-sm font-semibold text-text">Key takeaways</h2>
             <ul className="mt-3 space-y-2.5">
-              {topic.keyTakeaways.map((point, i) => (
+              {topic.key_takeaways.map((point, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed text-text-muted">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-secondary" aria-hidden="true" />
                   {point}
@@ -86,9 +97,9 @@ export default async function LearnTopicPage({ params }: { params: Promise<{ slu
               <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Quick facts</p>
               <h3 className="mt-2 text-base font-semibold text-text">{relatedTool.name}</h3>
               <p className="text-xs text-text-muted">by {relatedTool.maker}</p>
-              <p className="mt-3 text-sm leading-relaxed text-text-muted">{relatedTool.pricingNote}</p>
+              <p className="mt-3 text-sm leading-relaxed text-text-muted">{relatedTool.pricing_note}</p>
               <div className="mt-4 flex flex-wrap gap-1.5">
-                {relatedTool.bestFor.map((item) => (
+                {relatedTool.best_for.map((item) => (
                   <Badge key={item} tone="primary">
                     {item}
                   </Badge>

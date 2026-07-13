@@ -8,10 +8,9 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { useLocalStorage } from "@/lib/useLocalStorage";
-import { STORAGE_KEYS } from "@/lib/storageKeys";
+import { supabase, DEMO_USER_ID } from "@/lib/supabase";
 import { downloadCertificate } from "@/lib/certificate";
-import { Quiz, QuizResult } from "@/types";
+import { Quiz } from "@/types";
 import { cn } from "@/lib/utils";
 
 const PASS_THRESHOLD = 80;
@@ -24,13 +23,13 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(quiz.questions.length).fill(null));
   const [certName, setCertName] = useState("");
   const [certGenerated, setCertGenerated] = useState(false);
-  const [, setResults] = useLocalStorage<QuizResult[]>(STORAGE_KEYS.quizResults, []);
+  const [resultId, setResultId] = useState<string | null>(null);
 
   const currentQuestion = quiz.questions[currentIndex];
   const selected = answers[currentIndex];
 
   const correctCount = answers.reduce<number>(
-    (acc, ans, i) => acc + (ans === quiz.questions[i].correctIndex ? 1 : 0),
+    (acc, ans, i) => acc + (ans === quiz.questions[i].correct_index ? 1 : 0),
     0
   );
   const scorePercent = Math.round((correctCount / quiz.questions.length) * 100);
@@ -56,21 +55,24 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     if (currentIndex > 0) setCurrentIndex((i) => i - 1);
   }
 
-  function finishQuiz() {
+  async function finishQuiz() {
     const finalCorrect = answers.reduce<number>(
-      (acc, ans, i) => acc + (ans === quiz.questions[i].correctIndex ? 1 : 0),
+      (acc, ans, i) => acc + (ans === quiz.questions[i].correct_index ? 1 : 0),
       0
     );
     const finalScore = Math.round((finalCorrect / quiz.questions.length) * 100);
-    const result: QuizResult = {
-      quizId: quiz.id,
-      quizTitle: quiz.title,
-      scorePercent: finalScore,
-      correctCount: finalCorrect,
-      totalQuestions: quiz.questions.length,
-      completedAt: new Date().toISOString(),
-    };
-    setResults((prev) => [...prev.filter((r) => r.quizId !== quiz.id), result]);
+    const { data } = await supabase
+      .from("quiz_results")
+      .insert({
+        user_id: DEMO_USER_ID,
+        quiz_id: quiz.id,
+        score_percent: finalScore,
+        correct_count: finalCorrect,
+        total_questions: quiz.questions.length,
+      })
+      .select()
+      .single();
+    setResultId(data?.id ?? null);
     setPhase("result");
   }
 
@@ -79,10 +81,11 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     setCurrentIndex(0);
     setCertGenerated(false);
     setCertName("");
+    setResultId(null);
     setPhase("intro");
   }
 
-  function handleGenerateCertificate() {
+  async function handleGenerateCertificate() {
     if (!certName.trim()) return;
     downloadCertificate({
       name: certName.trim(),
@@ -90,9 +93,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       scorePercent,
       date: new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }),
     });
-    setResults((prev) =>
-      prev.map((r) => (r.quizId === quiz.id ? { ...r, certificateName: certName.trim() } : r))
-    );
+    if (resultId) {
+      await supabase.from("quiz_results").update({ certificate_name: certName.trim() }).eq("id", resultId);
+    }
     setCertGenerated(true);
   }
 
@@ -100,7 +103,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     return (
       <Card className="mx-auto max-w-2xl text-center">
         <Badge tone="primary" className="mx-auto mb-4">
-          {quiz.questions.length} questions · ~{quiz.estimatedMinutes} min
+          {quiz.questions.length} questions · ~{quiz.estimated_minutes} min
         </Badge>
         <h1 className="text-2xl font-semibold text-text">{quiz.title}</h1>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-text-muted">{quiz.description}</p>
@@ -235,7 +238,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         <h2 className="text-sm font-semibold uppercase tracking-wide text-text-muted">Review</h2>
         {quiz.questions.map((q, i) => {
           const userAnswer = answers[i];
-          const isCorrect = userAnswer === q.correctIndex;
+          const isCorrect = userAnswer === q.correct_index;
           return (
             <Card key={q.id}>
               <div className="flex items-start gap-3">
@@ -249,7 +252,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
                   {isCorrect ? (
                     <>
                       <p className="mt-1.5 text-sm text-text-muted">
-                        Correct answer: <span className="text-text">{q.options[q.correctIndex]}</span>
+                        Correct answer: <span className="text-text">{q.options[q.correct_index]}</span>
                       </p>
                       <p className="mt-2 text-sm leading-relaxed text-text-muted">{q.explanation}</p>
                     </>

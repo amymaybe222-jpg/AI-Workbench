@@ -1,35 +1,35 @@
 // Shared domain types for the AI Workbench app.
-// Mock data implements these interfaces; localStorage-backed hooks read/write compatible shapes.
+// These mirror the shape of rows returned by Supabase (see supabase/migrations/*.sql).
 
 export interface LearnTopic {
   slug: string;
   title: string;
   category: "Foundations" | "Tools";
   summary: string;
-  readTime: string;
+  read_time: string;
   tags: string[];
   sections: { heading: string; body: string[] }[];
-  keyTakeaways: string[];
-  relatedTools?: string[];
+  key_takeaways: string[];
+  related_tool_slugs: string[] | null;
 }
 
 export interface AiTool {
   id: string;
   name: string;
   maker: string;
-  bestFor: string[];
+  best_for: string[];
   description: string;
   strengths: string[];
   limitations: string[];
-  pricingNote: string;
-  learnSlug?: string;
+  pricing_note: string;
+  learn_slug: string | null;
 }
 
-export interface ToolTask {
+export interface ToolTaskRow {
   id: string;
   label: string;
   keywords: string[];
-  recommendedToolIds: string[];
+  recommended_tool_ids: string[];
   reasoning: string;
 }
 
@@ -43,66 +43,73 @@ export type PromptCategory =
   | "People & HR"
   | "Sales";
 
-export interface Prompt {
+export interface PromptRow {
   id: string;
   title: string;
   category: PromptCategory;
   tool: string;
   description: string;
-  prompt: string;
+  prompt_text: string;
   tags: string[];
-  likes: number;
+  like_count: number;
+  created_at: string;
 }
 
 export interface QuizQuestion {
   id: string;
+  quiz_id: string;
   question: string;
   options: string[];
-  correctIndex: number;
+  correct_index: number;
   explanation: string;
+  order_index: number;
 }
 
 export interface Quiz {
   id: string;
   title: string;
   description: string;
-  estimatedMinutes: number;
+  estimated_minutes: number;
   questions: QuizQuestion[];
 }
 
 export interface QuizResult {
-  quizId: string;
-  quizTitle: string;
-  scorePercent: number;
-  correctCount: number;
-  totalQuestions: number;
-  completedAt: string;
-  certificateName?: string;
+  id?: string;
+  user_id: string;
+  quiz_id: string;
+  quiz_title: string;
+  score_percent: number;
+  correct_count: number;
+  total_questions: number;
+  completed_at: string;
+  certificate_name?: string | null;
 }
 
 export interface CommunityComment {
   id: string;
+  post_id: string;
   author: string;
-  role: string;
+  role: string | null;
   body: string;
-  createdAt: string;
+  created_at: string;
 }
 
 export interface CommunityPost {
   id: string;
+  user_id: string;
   title: string;
   author: string;
-  role: string;
-  team: string;
-  tool: string;
+  role: string | null;
+  team: string | null;
+  tool: string | null;
   body: string;
   tags: string[];
-  createdAt: string;
-  likes: number;
+  created_at: string;
+  like_count: number;
   comments: CommunityComment[];
   /** Shorter, keyword-focused variants for <title>/meta description, used when `title` runs too long for search snippets. */
-  seoTitle?: string;
-  seoDescription?: string;
+  seo_title?: string | null;
+  seo_description?: string | null;
 }
 
 export interface UserProfile {

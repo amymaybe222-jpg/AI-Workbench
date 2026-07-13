@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { PostDetail } from "@/components/community/PostDetail";
-import { communityPosts } from "@/data/community";
+import { supabase } from "@/lib/supabase";
 
-export function generateStaticParams() {
-  return communityPosts.map((post) => ({ id: post.id }));
+export async function generateStaticParams() {
+  const { data } = await supabase.from("posts").select("id").not("author", "is", null);
+  return (data ?? []).map((post) => ({ id: post.id }));
 }
 
 export async function generateMetadata({
@@ -12,10 +13,11 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  // Only seed posts are known server-side — posts a user adds live in their own
-  // browser's localStorage and never reach the server, so unmatched ids fall
-  // back to generic Community copy instead of an empty/broken title.
-  const post = communityPosts.find((p) => p.id === id);
+  // Only seed/DB posts are known server-side — posts a user adds through the
+  // UI are written straight to Supabase too, but this metadata call happens
+  // at build/request time and unmatched ids fall back to generic Community
+  // copy instead of an empty/broken title.
+  const { data: post } = await supabase.from("posts").select("*").eq("id", id).maybeSingle();
   if (!post) {
     return {
       title: "Community post",
@@ -23,8 +25,8 @@ export async function generateMetadata({
     };
   }
   return {
-    title: post.seoTitle ?? post.title,
-    description: post.seoDescription ?? post.body.slice(0, 155),
+    title: post.seo_title ?? post.title,
+    description: post.seo_description ?? post.body.slice(0, 155),
   };
 }
 

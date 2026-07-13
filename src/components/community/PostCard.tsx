@@ -57,7 +57,7 @@ export function PostCard({
             {post.role} · {post.team}
           </p>
         </div>
-        <span className="ml-auto shrink-0 text-xs text-text-muted">{timeAgo(post.createdAt)}</span>
+        <span className="ml-auto shrink-0 text-xs text-text-muted">{timeAgo(post.created_at)}</span>
       </div>
 
       <span className="mt-4 inline-flex w-fit items-center rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-white">
@@ -81,7 +81,7 @@ export function PostCard({
           )}
         >
           <Heart className={cn("h-4 w-4", isLiked && "fill-current", pulse && "animate-heart-pop")} aria-hidden="true" />
-          {post.likes}
+          {post.like_count}
         </button>
         <Link
           href={`/community/${post.id}`}

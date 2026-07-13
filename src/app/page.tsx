@@ -2,9 +2,7 @@ import { BookOpen, Compass, Library, ClipboardCheck, MessagesSquare, UserCircle,
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { aiTools } from "@/data/tools";
-import { prompts } from "@/data/prompts";
-import { quizzes } from "@/data/quizzes";
+import { supabase } from "@/lib/supabase";
 
 const features = [
   {
@@ -70,7 +68,13 @@ const steps = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [{ count: promptCount }, { count: toolCount }, { count: quizCount }] = await Promise.all([
+    supabase.from("prompts").select("id", { count: "exact", head: true }),
+    supabase.from("tools").select("id", { count: "exact", head: true }),
+    supabase.from("quizzes").select("id", { count: "exact", head: true }),
+  ]);
+
   return (
     <div className="space-y-12">
       {/* Hero */}
@@ -104,17 +108,17 @@ export default function Home() {
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <Card className="text-center">
             <Library className="mx-auto h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="mt-4 font-mono text-2xl font-semibold text-text">{prompts.length}+</p>
+            <p className="mt-4 font-mono text-2xl font-semibold text-text">{promptCount ?? 0}+</p>
             <p className="mt-4 text-xs text-text-muted">Prompts ready to use</p>
           </Card>
           <Card className="text-center">
             <Compass className="mx-auto h-5 w-5 text-secondary" aria-hidden="true" />
-            <p className="mt-4 font-mono text-2xl font-semibold text-text">{aiTools.length}</p>
+            <p className="mt-4 font-mono text-2xl font-semibold text-text">{toolCount ?? 0}</p>
             <p className="mt-4 text-xs text-text-muted">Tools compared</p>
           </Card>
           <Card className="text-center">
             <ClipboardCheck className="mx-auto h-5 w-5 text-accent" aria-hidden="true" />
-            <p className="mt-4 font-mono text-2xl font-semibold text-text">{quizzes.length}</p>
+            <p className="mt-4 font-mono text-2xl font-semibold text-text">{quizCount ?? 0}</p>
             <p className="mt-4 text-xs text-text-muted">Scored assessments</p>
           </Card>
           <Card className="text-center">

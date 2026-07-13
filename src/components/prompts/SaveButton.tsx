@@ -2,21 +2,12 @@
 
 import { Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useLocalStorage } from "@/lib/useLocalStorage";
-import { STORAGE_KEYS } from "@/lib/storageKeys";
 
-export function SaveButton({ promptId }: { promptId: string }) {
-  const [saved, setSaved] = useLocalStorage<string[]>(STORAGE_KEYS.savedPrompts, []);
-  const isSaved = saved.includes(promptId);
-
-  function toggle() {
-    setSaved((prev) => (prev.includes(promptId) ? prev.filter((id) => id !== promptId) : [...prev, promptId]));
-  }
-
+export function SaveButton({ isSaved, onToggle }: { isSaved: boolean; onToggle: () => void }) {
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={onToggle}
       aria-pressed={isSaved}
       aria-label={isSaved ? "Remove prompt from saved" : "Save prompt"}
       className={cn(
