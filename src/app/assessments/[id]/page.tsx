@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabase";
-import { QuizRunner } from "@/components/assessments/QuizRunner";
 import { Quiz, QuizQuestion } from "@/types";
+
+const QuizRunner = dynamic(() => import("@/components/assessments/QuizRunner").then((m) => m.QuizRunner));
 
 export async function generateStaticParams() {
   const { data } = await supabase.from("quizzes").select("id");

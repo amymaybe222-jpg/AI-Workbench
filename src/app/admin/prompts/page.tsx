@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { PromptAdmin } from "@/components/admin/PromptAdmin";
 import { AdminGate } from "@/components/admin/AdminGate";
+
+const PromptAdmin = dynamic(() => import("@/components/admin/PromptAdmin").then((m) => m.PromptAdmin));
 
 export const metadata: Metadata = {
   title: "Admin · Prompts",

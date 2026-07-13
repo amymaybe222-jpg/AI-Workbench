@@ -7,19 +7,16 @@ import { Menu, Search, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { navItems } from "./navItems";
 import { cn } from "@/lib/utils";
-import { useProfile } from "@/lib/useProfile";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { Avatar } from "@/components/ui/Avatar";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { useBodyScrollLock } from "@/lib/useBodyScrollLock";
 import { HeaderSearch } from "./HeaderSearch";
+import { ProfileAvatarLink } from "./ProfileAvatarLink";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const pathname = usePathname();
-  const { profile } = useProfile();
-  const displayName = profile.name || "Profile";
   const drawerRef = useRef<HTMLDivElement>(null);
   useFocusTrap(open, drawerRef, () => setOpen(false));
   useBodyScrollLock(open);
@@ -80,13 +77,7 @@ export function Header() {
               <Search className="h-4 w-4" aria-hidden="true" />
             </button>
             <ThemeToggle />
-            <Link
-              href="/profile"
-              aria-label={`View profile (${displayName})`}
-              className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-xs font-semibold text-primary transition-colors hover:border-primary/40"
-            >
-              <Avatar name={displayName} avatarDataUrl={profile.avatarDataUrl} className="h-9 w-9 text-xs" />
-            </Link>
+            <ProfileAvatarLink />
           </div>
 
           {mobileSearchOpen && (

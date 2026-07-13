@@ -1,9 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons/SocialIcons";
-import { useIsAdmin } from "@/lib/useAuth";
+import { AdminFooterColumn } from "./AdminFooterColumn";
 
 const productLinks = [
   { href: "/learn", label: "Learn AI" },
@@ -18,11 +16,6 @@ const companyLinks = [
   { href: "/team", label: "Meet the team" },
 ];
 
-const adminLinks = [
-  { href: "/admin/prompts", label: "Manage prompts" },
-  { href: "/admin/users", label: "Manage users" },
-];
-
 const legalLinks = [
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Service" },
@@ -34,7 +27,7 @@ const socialLinks = [
   { href: "#", label: "X (Twitter)", Icon: XIcon },
 ];
 
-function FooterColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
+export function FooterColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   return (
     <div>
       <h3 className="text-xs font-semibold uppercase tracking-wide text-text">{title}</h3>
@@ -55,8 +48,6 @@ function FooterColumn({ title, links }: { title: string; links: { href: string; 
 }
 
 export function Footer() {
-  const { isAdmin } = useIsAdmin();
-
   return (
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -83,7 +74,7 @@ export function Footer() {
             <FooterColumn title="Product" links={productLinks} />
             <FooterColumn title="Company" links={companyLinks} />
             <FooterColumn title="Legal" links={legalLinks} />
-            {isAdmin && <FooterColumn title="Admin" links={adminLinks} />}
+            <AdminFooterColumn />
           </div>
         </div>
 

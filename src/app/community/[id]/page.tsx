@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { PostDetail } from "@/components/community/PostDetail";
+import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabase";
+import { loadCommunityPostsInitialData } from "@/lib/community/loadCommunityPosts";
+
+const PostDetail = dynamic(() => import("@/components/community/PostDetail").then((m) => m.PostDetail));
 
 export async function generateStaticParams() {
   const { data } = await supabase.from("posts").select("id").not("author", "is", null);
@@ -32,5 +35,6 @@ export async function generateMetadata({
 
 export default async function CommunityPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return <PostDetail postId={id} />;
+  const initialData = await loadCommunityPostsInitialData();
+  return <PostDetail postId={id} initialData={initialData} />;
 }

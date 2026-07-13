@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { UserAdmin } from "@/components/admin/UserAdmin";
 import { AdminGate } from "@/components/admin/AdminGate";
+
+const UserAdmin = dynamic(() => import("@/components/admin/UserAdmin").then((m) => m.UserAdmin));
 
 export const metadata: Metadata = {
   title: "Admin · Company details",

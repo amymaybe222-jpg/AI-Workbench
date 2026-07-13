@@ -11,9 +11,10 @@ import { PostCard } from "./PostCard";
 import { NewPostForm } from "./NewPostForm";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
 import { useAuth } from "@/lib/useAuth";
+import type { CommunityPostsInitialData } from "@/lib/community/loadCommunityPosts";
 
-export function CommunityFeed() {
-  const { posts, likedIds, addPost, toggleLike } = useCommunityPosts();
+export function CommunityFeed({ initialData }: { initialData: CommunityPostsInitialData }) {
+  const { posts, likedIds, addPost, toggleLike } = useCommunityPosts(initialData);
   const { isLoggedIn, hydrated: authHydrated } = useAuth();
   const router = useRouter();
   const [search, setSearch] = useState("");

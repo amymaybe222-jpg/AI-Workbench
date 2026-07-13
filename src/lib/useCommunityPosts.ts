@@ -3,12 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { CommunityComment, CommunityPost } from "@/types";
+import type { CommunityPostsInitialData } from "@/lib/community/loadCommunityPosts";
 
-export function useCommunityPosts() {
-  const [posts, setPosts] = useState<CommunityPost[]>([]);
-  const [likedIds, setLikedIds] = useState<string[]>([]);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const [hydrated, setHydrated] = useState(false);
+export function useCommunityPosts(initial?: CommunityPostsInitialData) {
+  const [posts, setPosts] = useState<CommunityPost[]>(initial?.posts ?? []);
+  const [likedIds, setLikedIds] = useState<string[]>(initial?.likedIds ?? []);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(initial?.currentUserId ?? null);
+  const [hydrated, setHydrated] = useState(!!initial);
 
   const load = useCallback(async () => {
     const { data: userRes } = await supabase.auth.getUser();
@@ -58,8 +59,10 @@ export function useCommunityPosts() {
   }, []);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    if (!initial) load();
+    // Only fetch on mount when no server-seeded initial data was provided.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function addPost(post: {
     title: string;

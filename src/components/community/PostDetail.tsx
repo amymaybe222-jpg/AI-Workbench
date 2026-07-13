@@ -14,6 +14,7 @@ import { useAuth } from "@/lib/useAuth";
 import { NewPostForm } from "./NewPostForm";
 import { cn } from "@/lib/utils";
 import { CommunityComment } from "@/types";
+import type { CommunityPostsInitialData } from "@/lib/community/loadCommunityPosts";
 
 function initials(name: string) {
   return name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
@@ -113,7 +114,13 @@ function CommentItem({
   );
 }
 
-export function PostDetail({ postId }: { postId: string }) {
+export function PostDetail({
+  postId,
+  initialData,
+}: {
+  postId: string;
+  initialData: CommunityPostsInitialData;
+}) {
   const router = useRouter();
   const {
     getPost,
@@ -126,7 +133,7 @@ export function PostDetail({ postId }: { postId: string }) {
     deleteComment,
     updatePost,
     deletePost,
-  } = useCommunityPosts();
+  } = useCommunityPosts(initialData);
   const { profile } = useProfile();
   const { isLoggedIn, hydrated: authHydrated } = useAuth();
   const [comment, setComment] = useState("");

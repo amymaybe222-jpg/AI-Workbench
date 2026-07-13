@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CommunityFeed } from "@/components/community/CommunityFeed";
+import { loadCommunityPostsInitialData } from "@/lib/community/loadCommunityPosts";
 
 export const metadata: Metadata = {
   title: "Community",
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
     "Join an AI community of professionals sharing real workplace AI wins, prompts, and peer feedback.",
 };
 
-export default function CommunityPage() {
+export default async function CommunityPage() {
+  const initialData = await loadCommunityPostsInitialData();
+
   return (
     <div>
       <PageHeader
@@ -16,7 +19,7 @@ export default function CommunityPage() {
         title="Learn from how others are applying AI"
         description="Share what you built or learned, and get practical feedback from peers across the company."
       />
-      <CommunityFeed />
+      <CommunityFeed initialData={initialData} />
     </div>
   );
 }
