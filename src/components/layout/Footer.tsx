@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons/SocialIcons";
+import { useIsAdmin } from "@/lib/useAuth";
 
 const productLinks = [
   { href: "/learn", label: "Learn AI" },
@@ -13,6 +16,11 @@ const productLinks = [
 const companyLinks = [
   { href: "/about", label: "About" },
   { href: "/team", label: "Meet the team" },
+];
+
+const adminLinks = [
+  { href: "/admin/prompts", label: "Manage prompts" },
+  { href: "/admin/users", label: "Manage users" },
 ];
 
 const legalLinks = [
@@ -47,6 +55,8 @@ function FooterColumn({ title, links }: { title: string; links: { href: string; 
 }
 
 export function Footer() {
+  const { isAdmin } = useIsAdmin();
+
   return (
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -73,6 +83,7 @@ export function Footer() {
             <FooterColumn title="Product" links={productLinks} />
             <FooterColumn title="Company" links={companyLinks} />
             <FooterColumn title="Legal" links={legalLinks} />
+            {isAdmin && <FooterColumn title="Admin" links={adminLinks} />}
           </div>
         </div>
 
