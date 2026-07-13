@@ -14,9 +14,9 @@ const COLORS = {
   border: "#e4e1f0",
   text: "#15131f",
   textMuted: "#6b6980",
-  primary: "#6d5df5",
-  secondary: "#0ea5e9",
-  accent: "#ec4899",
+  primary: "#5b4bd6",
+  secondary: "#0369a1",
+  accent: "#be185d",
 };
 
 // Satori (the renderer behind ImageResponse) requires ttf/otf/woff — it can't read woff2,

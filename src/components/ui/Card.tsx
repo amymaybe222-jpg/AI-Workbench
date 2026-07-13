@@ -19,7 +19,7 @@ export function Card({ className, hoverable = false, ...props }: CardProps) {
         "transition-[opacity,transform] duration-700 ease-out",
         isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
         hoverable &&
-          "hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-14px_rgba(109,93,245,0.35)] dark:hover:shadow-[0_16px_36px_-14px_rgba(139,124,247,0.4)]",
+          "hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-14px_rgba(91,75,214,0.35)] dark:hover:shadow-[0_16px_36px_-14px_rgba(139,124,247,0.4)]",
         className
       )}
       {...props}

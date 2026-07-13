@@ -19,9 +19,9 @@ export function downloadCertificate(opts: {
   const bg = "#f8f8fc";
   const surface = "#ffffff";
   const border = "#e4e1f0";
-  const primary = "#6d5df5";
-  const secondary = "#0ea5e9";
-  const accent = "#ec4899";
+  const primary = "#5b4bd6";
+  const secondary = "#0369a1";
+  const accent = "#be185d";
   const text = "#15131f";
   const muted = "#6b6980";
 
@@ -39,14 +39,14 @@ export function downloadCertificate(opts: {
 
   // Glow accents
   const glow1 = ctx.createRadialGradient(180, 140, 20, 180, 140, 420);
-  glow1.addColorStop(0, "rgba(109,93,245,0.18)");
-  glow1.addColorStop(1, "rgba(109,93,245,0)");
+  glow1.addColorStop(0, "rgba(91,75,214,0.18)");
+  glow1.addColorStop(1, "rgba(91,75,214,0)");
   ctx.fillStyle = glow1;
   ctx.fillRect(0, 0, width, height);
 
   const glow2 = ctx.createRadialGradient(width - 180, height - 160, 20, width - 180, height - 160, 420);
-  glow2.addColorStop(0, "rgba(14,165,233,0.16)");
-  glow2.addColorStop(1, "rgba(14,165,233,0)");
+  glow2.addColorStop(0, "rgba(3,105,161,0.16)");
+  glow2.addColorStop(1, "rgba(3,105,161,0)");
   ctx.fillStyle = glow2;
   ctx.fillRect(0, 0, width, height);
 
@@ -116,7 +116,7 @@ export function downloadCertificate(opts: {
   ctx.fillText(quizTitle, width / 2, 600);
 
   // Score badge
-  ctx.fillStyle = "rgba(14,165,233,0.12)";
+  ctx.fillStyle = "rgba(3,105,161,0.12)";
   ctx.strokeStyle = secondary;
   ctx.lineWidth = 1.5;
   ctx.beginPath();

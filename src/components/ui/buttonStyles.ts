@@ -8,9 +8,9 @@ const base =
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-r from-primary to-[#8b6cf6] dark:to-secondary text-white shadow-[0_8px_24px_-8px_rgba(109,93,245,0.55)] dark:shadow-[0_8px_24px_-8px_rgba(139,124,247,0.45)] hover:shadow-[0_12px_28px_-6px_rgba(109,93,245,0.65)] dark:hover:shadow-[0_12px_28px_-6px_rgba(139,124,247,0.55)] hover:brightness-[1.04] active:scale-[0.98]",
+    "bg-gradient-to-r from-primary to-[#8b6cf6] dark:to-secondary text-white shadow-[0_8px_24px_-8px_rgba(91,75,214,0.55)] dark:shadow-[0_8px_24px_-8px_rgba(139,124,247,0.45)] hover:shadow-[0_12px_28px_-6px_rgba(91,75,214,0.65)] dark:hover:shadow-[0_12px_28px_-6px_rgba(139,124,247,0.55)] hover:brightness-[1.04] active:scale-[0.98]",
   secondary:
-    "bg-secondary text-white shadow-[0_8px_24px_-8px_rgba(14,165,233,0.5)] hover:brightness-105 hover:shadow-[0_12px_28px_-6px_rgba(14,165,233,0.6)] active:scale-[0.98]",
+    "bg-secondary text-white shadow-[0_8px_24px_-8px_rgba(3,105,161,0.5)] hover:brightness-105 hover:shadow-[0_12px_28px_-6px_rgba(3,105,161,0.6)] active:scale-[0.98]",
   outline:
     "border border-border text-text hover:border-primary hover:text-primary bg-surface hover:bg-primary/5",
   ghost: "text-text-muted hover:text-text hover:bg-text/5",

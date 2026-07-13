@@ -11,10 +11,10 @@
   --color-border: #e4e1f0;
   --color-text: #15131f;
   --color-text-muted: #6b6980;
-  --color-primary: #6d5df5;
-  --color-primary-hover: #5a47e6;
-  --color-secondary: #0ea5e9;
-  --color-accent: #ec4899;
+  --color-primary: #5b4bd6;
+  --color-primary-hover: #4c3dc4;
+  --color-secondary: #0369a1;
+  --color-accent: #be185d;
 }
 
 /* Dark equivalents of every light token — soft dark grays (never pure
@@ -130,8 +130,8 @@ body {
 
 .grid-glow {
   background-image:
-    radial-gradient(circle at 15% 0%, rgba(109, 93, 245, 0.14), transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.12), transparent 45%),
+    radial-gradient(circle at 15% 0%, rgba(91, 75, 214, 0.14), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(3, 105, 161, 0.12), transparent 45%),
     linear-gradient(rgba(21, 19, 31, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(21, 19, 31, 0.035) 1px, transparent 1px);
   background-size: auto, auto, 44px 44px, 44px 44px;
