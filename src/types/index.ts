@@ -88,6 +88,7 @@ export interface QuizResult {
 export interface CommunityComment {
   id: string;
   post_id: string;
+  owner_id: string | null;
   author: string;
   role: string | null;
   body: string;
@@ -97,6 +98,7 @@ export interface CommunityComment {
 export interface CommunityPost {
   id: string;
   user_id: string;
+  owner_id: string | null;
   title: string;
   author: string;
   role: string | null;

@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Award, BookMarked, MessagesSquare, Pencil, Save, Target } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Avatar } from "@/components/ui/Avatar";
-import { useLocalStorage } from "@/lib/useLocalStorage";
+import { useProfile } from "@/lib/useProfile";
+import { useAuth } from "@/lib/useAuth";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
-import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
 import { supabase, DEMO_USER_ID } from "@/lib/supabase";
 import { downloadCertificate } from "@/lib/certificate";
 import { QuizResult, UserProfile } from "@/types";
@@ -17,7 +18,9 @@ import { QuizResult, UserProfile } from "@/types";
 const MAX_AVATAR_BYTES = 2 * 1024 * 1024;
 
 export function ProfileView() {
-  const [profile, setProfile] = useLocalStorage<UserProfile>(STORAGE_KEYS.profile, DEFAULT_PROFILE);
+  const router = useRouter();
+  const { isLoggedIn, hydrated: authHydrated } = useAuth();
+  const { profile, hydrated: profileHydrated, updateProfile } = useProfile();
   const [results, setResults] = useState<QuizResult[]>([]);
   const [savedPromptCount, setSavedPromptCount] = useState(0);
   const { posts } = useCommunityPosts();
@@ -25,6 +28,12 @@ export function ProfileView() {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<UserProfile>(profile);
   const [avatarError, setAvatarError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (authHydrated && !isLoggedIn) {
+      router.replace("/login?redirect=/profile");
+    }
+  }, [authHydrated, isLoggedIn, router]);
 
   useEffect(() => {
     async function load() {
@@ -68,7 +77,7 @@ export function ProfileView() {
 
   function saveProfile(e: React.FormEvent) {
     e.preventDefault();
-    setProfile(draft);
+    updateProfile(draft);
     setEditing(false);
   }
 
@@ -105,6 +114,10 @@ export function ProfileView() {
         day: "numeric",
       }),
     });
+  }
+
+  if (!authHydrated || !isLoggedIn || !profileHydrated) {
+    return <div className="h-64 animate-pulse rounded-xl border border-border bg-surface" />;
   }
 
   return (

@@ -4,17 +4,20 @@ import { useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { useLocalStorage } from "@/lib/useLocalStorage";
-import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
+import { useProfile } from "@/lib/useProfile";
 import { supabase } from "@/lib/supabase";
 import { AiTool } from "@/types";
 
 const MIN_BODY_LENGTH = 30;
 
 export function NewPostForm({
+  initial,
+  submitLabel = "Post",
   onSubmit,
   onCancel,
 }: {
+  initial?: { title: string; tool: string; body: string };
+  submitLabel?: string;
   onSubmit: (data: {
     title: string;
     body: string;
@@ -26,10 +29,10 @@ export function NewPostForm({
   }) => void;
   onCancel: () => void;
 }) {
-  const [profile] = useLocalStorage(STORAGE_KEYS.profile, DEFAULT_PROFILE);
-  const [title, setTitle] = useState("");
-  const [tool, setTool] = useState("");
-  const [body, setBody] = useState("");
+  const { profile } = useProfile();
+  const [title, setTitle] = useState(initial?.title ?? "");
+  const [tool, setTool] = useState(initial?.tool ?? "");
+  const [body, setBody] = useState(initial?.body ?? "");
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [tools, setTools] = useState<AiTool[]>([]);
 
@@ -155,7 +158,7 @@ export function NewPostForm({
           </Button>
           <Button type="submit">
             <Send className="h-4 w-4" aria-hidden="true" />
-            Post
+            {submitLabel}
           </Button>
         </div>
       </form>

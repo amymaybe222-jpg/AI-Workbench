@@ -6,17 +6,13 @@ import { CheckCircle2, LogOut, Save } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/lib/useAuth";
-import { useLocalStorage } from "@/lib/useLocalStorage";
-import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
+import { useProfile } from "@/lib/useProfile";
 import { UserProfile } from "@/types";
 
 export function SettingsForm() {
   const router = useRouter();
   const { isLoggedIn, hydrated: authHydrated, logout } = useAuth();
-  const [profile, setProfile, profileHydrated] = useLocalStorage<UserProfile>(
-    STORAGE_KEYS.profile,
-    DEFAULT_PROFILE
-  );
+  const { profile, hydrated: profileHydrated, updateProfile } = useProfile();
 
   const [draft, setDraft] = useState<UserProfile>(profile);
   const [draftSeeded, setDraftSeeded] = useState(false);
@@ -41,7 +37,7 @@ export function SettingsForm() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setProfile((prev) => ({ ...prev, name: draft.name, website: draft.website }));
+    updateProfile({ name: draft.name, website: draft.website });
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   }

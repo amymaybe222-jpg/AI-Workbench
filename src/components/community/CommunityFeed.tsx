@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Plus, CheckCircle2 } from "lucide-react";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Button } from "@/components/ui/Button";
@@ -9,9 +10,12 @@ import { Modal } from "@/components/ui/Modal";
 import { PostCard } from "./PostCard";
 import { NewPostForm } from "./NewPostForm";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
+import { useAuth } from "@/lib/useAuth";
 
 export function CommunityFeed() {
   const { posts, likedIds, addPost, toggleLike } = useCommunityPosts();
+  const { isLoggedIn, hydrated: authHydrated } = useAuth();
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [justPosted, setJustPosted] = useState(false);
@@ -27,6 +31,14 @@ export function CommunityFeed() {
     return p.title.toLowerCase().includes(q) || p.body.toLowerCase().includes(q) || p.author.toLowerCase().includes(q);
   });
 
+  function handleToggleLike(postId: string) {
+    if (authHydrated && !isLoggedIn) {
+      router.push("/login?redirect=/community");
+      return;
+    }
+    toggleLike(postId);
+  }
+
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -37,7 +49,16 @@ export function CommunityFeed() {
           aria-label="Search community posts"
           className="max-w-md"
         />
-        <Button onClick={() => setShowForm((s) => !s)} variant={showForm ? "outline" : "primary"}>
+        <Button
+          onClick={() => {
+            if (authHydrated && !isLoggedIn) {
+              router.push("/login?redirect=/community");
+              return;
+            }
+            setShowForm((s) => !s);
+          }}
+          variant={showForm ? "outline" : "primary"}
+        >
           <Plus className="h-4 w-4" aria-hidden="true" />
           Share your work
         </Button>
@@ -74,7 +95,7 @@ export function CommunityFeed() {
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {filtered.map((post) => (
-            <PostCard key={post.id} post={post} isLiked={likedIds.includes(post.id)} onToggleLike={toggleLike} />
+            <PostCard key={post.id} post={post} isLiked={likedIds.includes(post.id)} onToggleLike={handleToggleLike} />
           ))}
         </div>
       )}
