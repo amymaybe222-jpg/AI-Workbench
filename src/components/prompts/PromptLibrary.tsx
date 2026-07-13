@@ -66,6 +66,12 @@ export function PromptLibrary() {
     }
   }
 
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const p of prompts) counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
+    return counts;
+  }, [prompts]);
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return prompts.filter((p) => {
@@ -91,16 +97,20 @@ export function PromptLibrary() {
         className="max-w-xl"
       />
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Chip active={category === "All"} onClick={() => setCategory("All")}>
-          All ({prompts.length})
-        </Chip>
-        {promptCategories.map((c) => (
-          <Chip key={c} active={category === c} onClick={() => setCategory(c)}>
-            {c}
-          </Chip>
-        ))}
-        <span className="mx-1 my-auto h-5 w-px bg-border" aria-hidden="true" />
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          aria-label="Filter by category"
+          className="focus-ring rounded-lg border border-border bg-surface-raised px-3 py-2 text-sm text-text focus:border-primary"
+        >
+          <option value="All">All categories ({prompts.length})</option>
+          {promptCategories.map((c) => (
+            <option key={c} value={c}>
+              {c} ({categoryCounts.get(c) ?? 0})
+            </option>
+          ))}
+        </select>
         <Chip active={savedOnly} onClick={() => setSavedOnly((s) => !s)}>
           Saved only {savedIds.length > 0 && `(${savedIds.length})`}
         </Chip>

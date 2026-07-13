@@ -10,11 +10,7 @@ import { matchTasks } from "@/lib/matchTasks";
 import { supabase } from "@/lib/supabase";
 import { AiTool, ToolTaskRow } from "@/types";
 
-const quickPrompts = [
-  "Write and reply to customer emails",
-  "Summarize a 40-page report",
-  "Generate unit tests for my code",
-];
+const quickPrompts = ["Write and reply to customer emails"];
 
 export function ToolPicker() {
   const [query, setQuery] = useState("");
