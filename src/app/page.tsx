@@ -1,4 +1,5 @@
 import { BookOpen, Compass, Library, ClipboardCheck, MessagesSquare, UserCircle, ArrowRight, Award } from "lucide-react";
+import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -140,7 +141,7 @@ export default async function Home() {
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <Card key={feature.href} hoverable className="group">
-              <a href={feature.href} className="focus-ring block rounded-lg">
+              <Link href={feature.href} className="focus-ring block rounded-lg">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <feature.icon className="h-5 w-5" aria-hidden="true" />
                 </div>
@@ -149,7 +150,7 @@ export default async function Home() {
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary opacity-80 transition-opacity group-hover:opacity-100">
                   {feature.cta} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
-              </a>
+              </Link>
             </Card>
           ))}
         </div>
