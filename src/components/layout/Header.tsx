@@ -10,17 +10,9 @@ import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Avatar } from "@/components/ui/Avatar";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { HeaderSearch } from "./HeaderSearch";
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
-}
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -91,7 +83,7 @@ export function Header() {
               aria-label={`View profile (${profile.name})`}
               className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-xs font-semibold text-primary transition-colors hover:border-primary/40"
             >
-              {initials(profile.name)}
+              <Avatar name={profile.name} avatarDataUrl={profile.avatarDataUrl} className="h-9 w-9 text-xs" />
             </Link>
           </div>
 

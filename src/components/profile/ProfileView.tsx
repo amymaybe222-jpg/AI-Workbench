@@ -6,6 +6,7 @@ import { Award, BookMarked, MessagesSquare, Pencil, Save, Target } from "lucide-
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Avatar } from "@/components/ui/Avatar";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
 import { STORAGE_KEYS, DEFAULT_PROFILE } from "@/lib/storageKeys";
@@ -13,9 +14,7 @@ import { supabase, DEMO_USER_ID } from "@/lib/supabase";
 import { downloadCertificate } from "@/lib/certificate";
 import { QuizResult, UserProfile } from "@/types";
 
-function initials(name: string) {
-  return name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
-}
+const MAX_AVATAR_BYTES = 2 * 1024 * 1024;
 
 export function ProfileView() {
   const [profile, setProfile] = useLocalStorage<UserProfile>(STORAGE_KEYS.profile, DEFAULT_PROFILE);
@@ -25,6 +24,7 @@ export function ProfileView() {
 
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<UserProfile>(profile);
+  const [avatarError, setAvatarError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -62,6 +62,7 @@ export function ProfileView() {
 
   function startEditing() {
     setDraft(profile);
+    setAvatarError(null);
     setEditing(true);
   }
 
@@ -69,6 +70,28 @@ export function ProfileView() {
     e.preventDefault();
     setProfile(draft);
     setEditing(false);
+  }
+
+  function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setAvatarError("Please choose an image file.");
+      return;
+    }
+    if (file.size > MAX_AVATAR_BYTES) {
+      setAvatarError("Image must be under 2MB.");
+      return;
+    }
+
+    setAvatarError(null);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setDraft((d) => ({ ...d, avatarDataUrl: reader.result as string }));
+    };
+    reader.readAsDataURL(file);
   }
 
   function redownload(result: QuizResult) {
@@ -89,6 +112,18 @@ export function ProfileView() {
       <Card className="h-fit">
         {editing ? (
           <form onSubmit={saveProfile} className="space-y-4">
+            <div>
+              <span className="text-xs font-medium text-text-muted">Photo</span>
+              <div className="mt-1.5 flex items-center gap-3">
+                <Avatar name={draft.name} avatarDataUrl={draft.avatarDataUrl} className="h-14 w-14 shrink-0 text-lg" />
+                <label className="focus-ring flex cursor-pointer items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-text-muted hover:border-primary/40 hover:text-primary">
+                  <input type="file" accept="image/*" onChange={handleAvatarChange} className="sr-only" />
+                  Choose photo
+                </label>
+              </div>
+              {avatarError && <p className="mt-1.5 text-xs text-red-600 dark:text-red-400">{avatarError}</p>}
+              <p className="mt-1.5 text-xs text-text-muted">JPG, PNG, or GIF. Max 2MB.</p>
+            </div>
             <div>
               <label htmlFor="p-name" className="text-xs font-medium text-text-muted">
                 Name
@@ -135,9 +170,7 @@ export function ProfileView() {
         ) : (
           <div>
             <div className="flex items-start justify-between">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/15 text-lg font-semibold text-primary">
-                {initials(profile.name)}
-              </span>
+              <Avatar name={profile.name} avatarDataUrl={profile.avatarDataUrl} className="h-14 w-14 text-lg" />
               <button
                 type="button"
                 onClick={startEditing}

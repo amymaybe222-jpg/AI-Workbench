@@ -117,4 +117,5 @@ export interface UserProfile {
   role: string;
   team: string;
   website?: string;
+  avatarDataUrl?: string;
 }
