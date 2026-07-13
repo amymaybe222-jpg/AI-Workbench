@@ -55,7 +55,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
         <button
           type="button"
           onClick={onClose}
-          className="focus-ring absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
+          className="focus-ring absolute right-1 top-1 flex h-11 w-11 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
           aria-label="Close"
         >
           <X className="h-4 w-4" aria-hidden="true" />

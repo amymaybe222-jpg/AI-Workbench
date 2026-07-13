@@ -134,7 +134,7 @@ export function ProfileView() {
               <span className="text-xs font-medium text-text-muted">Photo</span>
               <div className="mt-1.5 flex items-center gap-3">
                 <Avatar name={draft.name} avatarDataUrl={draft.avatarDataUrl} className="h-14 w-14 shrink-0 text-lg" />
-                <label className="focus-ring flex cursor-pointer items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-text-muted hover:border-primary/40 hover:text-primary">
+                <label className="focus-ring flex min-h-11 cursor-pointer items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-text-muted hover:border-primary/40 hover:text-primary">
                   <input type="file" accept="image/*" onChange={handleAvatarChange} className="sr-only" />
                   Choose photo
                 </label>
@@ -205,7 +205,7 @@ export function ProfileView() {
               <button
                 type="button"
                 onClick={startEditing}
-                className="focus-ring flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-text-muted hover:border-primary/40 hover:text-primary"
+                className="focus-ring flex min-h-11 items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-text-muted hover:border-primary/40 hover:text-primary"
               >
                 <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
                 Edit
@@ -228,7 +228,7 @@ export function ProfileView() {
             <button
               type="button"
               onClick={handleSignOut}
-              className="focus-ring mt-5 flex items-center gap-1.5 border-t border-border pt-4 text-xs font-medium text-text-muted hover:text-text"
+              className="focus-ring mt-5 flex min-h-11 items-center gap-1.5 border-t border-border pt-4 text-xs font-medium text-text-muted hover:text-text"
             >
               <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
               Sign out
@@ -269,7 +269,7 @@ export function ProfileView() {
           {results.length === 0 ? (
             <p className="mt-3 text-sm text-text-muted">
               No assessments completed yet.{" "}
-              <Link href="/assessments" className="font-medium text-primary hover:text-primary-hover">
+              <Link href="/assessments" className="inline-flex min-h-11 items-center py-3 font-medium text-primary hover:text-primary-hover">
                 Take your first one →
               </Link>
             </p>

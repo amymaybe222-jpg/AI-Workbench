@@ -110,7 +110,7 @@ export function ToolPicker() {
                         {tool.learn_slug && (
                           <Link
                             href={`/learn/${tool.learn_slug}`}
-                            className="focus-ring mt-3 inline-block text-sm font-medium text-primary hover:text-primary-hover"
+                            className="focus-ring mt-1 inline-flex min-h-11 items-center py-3 text-sm font-medium text-primary hover:text-primary-hover"
                           >
                             See how {tool.name} works →
                           </Link>

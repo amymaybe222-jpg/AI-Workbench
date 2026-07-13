@@ -36,7 +36,7 @@ export function FooterColumn({ title, links }: { title: string; links: { href: s
           <li key={link.href}>
             <Link
               href={link.href}
-              className="focus-ring text-sm text-text-muted transition-colors hover:text-primary"
+              className="focus-ring -mx-1 -my-3 inline-block min-w-11 px-1 py-3 text-sm text-text-muted transition-colors hover:text-primary"
             >
               {link.label}
             </Link>
@@ -62,7 +62,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="focus-ring flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-primary"
+                  className="focus-ring flex h-11 w-11 items-center justify-center rounded-full border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-primary"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                 </a>
@@ -70,7 +70,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
             <FooterColumn title="Product" links={productLinks} />
             <FooterColumn title="Company" links={companyLinks} />
             <FooterColumn title="Legal" links={legalLinks} />

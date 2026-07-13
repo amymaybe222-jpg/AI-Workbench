@@ -63,7 +63,7 @@ function CommentItem({
                 setEditing(true);
               }}
               aria-label="Edit comment"
-              className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-primary"
+              className="focus-ring flex h-11 w-11 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-primary"
             >
               <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -71,7 +71,7 @@ function CommentItem({
               type="button"
               onClick={() => setConfirmingDelete(true)}
               aria-label="Delete comment"
-              className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-text-muted hover:bg-accent/10 hover:text-accent"
+              className="focus-ring flex h-11 w-11 items-center justify-center rounded-lg text-text-muted hover:bg-accent/10 hover:text-accent"
             >
               <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -211,7 +211,7 @@ export function PostDetail({
     <div className="mx-auto max-w-2xl">
       <Link
         href="/community"
-        className="focus-ring mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-text-muted transition-colors hover:text-primary"
+        className="focus-ring mb-3 inline-flex min-h-11 items-center gap-1.5 py-3 text-sm font-medium text-text-muted transition-colors hover:text-primary"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to Community
@@ -240,7 +240,7 @@ export function PostDetail({
                 type="button"
                 onClick={() => setEditingPost(true)}
                 aria-label="Edit post"
-                className="focus-ring flex h-8 w-8 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-primary"
+                className="focus-ring flex h-11 w-11 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-primary"
               >
                 <Pencil className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -248,7 +248,7 @@ export function PostDetail({
                 type="button"
                 onClick={() => setConfirmingDeletePost(true)}
                 aria-label="Delete post"
-                className="focus-ring flex h-8 w-8 items-center justify-center rounded-lg text-text-muted hover:bg-accent/10 hover:text-accent"
+                className="focus-ring flex h-11 w-11 items-center justify-center rounded-lg text-text-muted hover:bg-accent/10 hover:text-accent"
               >
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -269,7 +269,7 @@ export function PostDetail({
             onClick={handleLike}
             aria-pressed={isLiked}
             className={cn(
-              "focus-ring flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm transition-colors",
+              "focus-ring flex min-h-11 items-center gap-1.5 rounded-lg px-2 py-1 text-sm transition-colors",
               isLiked ? "text-accent" : "text-text-muted hover:text-accent"
             )}
           >
@@ -308,7 +308,7 @@ export function PostDetail({
             <p className="text-sm text-text-muted">
               <Link
                 href={`/login?redirect=/community/${postId}`}
-                className="font-medium text-primary hover:text-primary-hover"
+                className="inline-flex min-h-11 items-center py-3 font-medium text-primary hover:text-primary-hover"
               >
                 Sign in
               </Link>{" "}

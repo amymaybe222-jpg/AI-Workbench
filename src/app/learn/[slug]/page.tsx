@@ -48,7 +48,7 @@ export default async function LearnTopicPage({ params }: { params: Promise<{ slu
     <div>
       <Link
         href="/learn"
-        className="focus-ring mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-text-muted transition-colors hover:text-primary"
+        className="focus-ring mb-3 inline-flex min-h-11 items-center gap-1.5 py-3 text-sm font-medium text-text-muted transition-colors hover:text-primary"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to Learn AI

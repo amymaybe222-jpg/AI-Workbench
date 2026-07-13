@@ -12,9 +12,9 @@ export function ProfileAvatarLink() {
     <Link
       href="/profile"
       aria-label={`View profile (${displayName})`}
-      className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-xs font-semibold text-primary transition-colors hover:border-primary/40"
+      className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-xs font-semibold text-primary transition-colors hover:border-primary/40"
     >
-      <Avatar name={displayName} avatarDataUrl={profile.avatarDataUrl} className="h-9 w-9 text-xs" />
+      <Avatar name={displayName} avatarDataUrl={profile.avatarDataUrl} className="h-11 w-11 text-xs" />
     </Link>
   );
 }

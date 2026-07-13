@@ -38,7 +38,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="focus-ring -ml-1.5 flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text xl:hidden"
+              className="focus-ring -ml-2.5 flex h-11 w-11 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text xl:hidden"
               aria-label="Open navigation menu"
               aria-expanded={open}
             >
@@ -71,7 +71,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setMobileSearchOpen(true)}
-              className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-text-muted transition-colors hover:border-primary/40 hover:text-primary lg:hidden"
+              className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-text-muted transition-colors hover:border-primary/40 hover:text-primary lg:hidden"
               aria-label="Open search"
             >
               <Search className="h-4 w-4" aria-hidden="true" />
@@ -86,7 +86,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setMobileSearchOpen(false)}
-                className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
+                className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
                 aria-label="Close search"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -127,7 +127,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="focus-ring flex h-9 w-9 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
+              className="focus-ring flex h-11 w-11 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
               aria-label="Close navigation menu"
             >
               <X className="h-5 w-5" aria-hidden="true" />
@@ -144,7 +144,7 @@ export function Header() {
                   onClick={() => setOpen(false)}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "focus-ring flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    "focus-ring flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors",
                     isActive ? "bg-primary/10 text-primary" : "text-text-muted hover:bg-text/5 hover:text-text"
                   )}
                 >

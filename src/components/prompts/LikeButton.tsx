@@ -30,7 +30,7 @@ export function LikeButton({
       aria-pressed={isLiked}
       aria-label={isLiked ? "Remove your like from this prompt" : "Like this prompt — I've used or approve of it"}
       className={cn(
-        "focus-ring inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors duration-150",
+        "focus-ring inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors duration-150",
         isLiked
           ? "border-accent/40 bg-accent/10 text-accent"
           : "border-border bg-surface-raised text-text-muted hover:border-accent/40 hover:text-accent"

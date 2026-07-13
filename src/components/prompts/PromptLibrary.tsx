@@ -102,7 +102,7 @@ export function PromptLibrary() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           aria-label="Filter by category"
-          className="focus-ring rounded-lg border border-border bg-surface-raised px-3 py-2 text-sm text-text focus:border-primary"
+          className="focus-ring min-h-11 rounded-lg border border-border bg-surface-raised px-3 py-2 text-sm text-text focus:border-primary"
         >
           <option value="All">All categories ({prompts.length})</option>
           {promptCategories.map((c) => (
