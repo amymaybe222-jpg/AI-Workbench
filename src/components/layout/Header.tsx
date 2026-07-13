@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { navItems } from "./navItems";
 import { cn } from "@/lib/utils";
@@ -24,16 +24,26 @@ function initials(name: string) {
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const pathname = usePathname();
   const [profile] = useLocalStorage(STORAGE_KEYS.profile, DEFAULT_PROFILE);
   const drawerRef = useRef<HTMLDivElement>(null);
   useFocusTrap(open, drawerRef, () => setOpen(false));
 
+  useEffect(() => {
+    if (!mobileSearchOpen) return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setMobileSearchOpen(false);
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobileSearchOpen]);
+
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-border bg-bg/85 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
+        <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <div className={cn("flex items-center gap-3", mobileSearchOpen && "lg:flex hidden")}>
             <button
               type="button"
               onClick={() => setOpen(true)}
@@ -65,8 +75,16 @@ export function Header() {
             })}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-3">
-            <HeaderSearch />
+          <div className={cn("flex shrink-0 items-center gap-3", mobileSearchOpen && "lg:flex hidden")}>
+            <HeaderSearch className="hidden max-w-xs lg:block" />
+            <button
+              type="button"
+              onClick={() => setMobileSearchOpen(true)}
+              className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-text-muted transition-colors hover:border-primary/40 hover:text-primary lg:hidden"
+              aria-label="Open search"
+            >
+              <Search className="h-4 w-4" aria-hidden="true" />
+            </button>
             <ThemeToggle />
             <Link
               href="/profile"
@@ -76,6 +94,20 @@ export function Header() {
               {initials(profile.name)}
             </Link>
           </div>
+
+          {mobileSearchOpen && (
+            <div className="absolute inset-0 flex items-center gap-2 bg-bg px-4 sm:px-6 lg:hidden">
+              <HeaderSearch className="flex-1" autoFocus />
+              <button
+                type="button"
+                onClick={() => setMobileSearchOpen(false)}
+                className="focus-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-text-muted hover:bg-text/5 hover:text-text"
+                aria-label="Close search"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+          )}
         </div>
       </header>
 

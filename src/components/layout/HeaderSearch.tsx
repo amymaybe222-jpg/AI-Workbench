@@ -13,12 +13,22 @@ interface LearnResult {
   summary: string;
 }
 
-export function HeaderSearch() {
+interface HeaderSearchProps {
+  className?: string;
+  autoFocus?: boolean;
+}
+
+export function HeaderSearch({ className, autoFocus }: HeaderSearchProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<LearnResult[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus) inputRef.current?.focus();
+  }, [autoFocus]);
 
   useEffect(() => {
     const q = query.trim();
@@ -62,9 +72,10 @@ export function HeaderSearch() {
   const showDropdown = open && query.trim().length > 0;
 
   return (
-    <div ref={containerRef} className="relative hidden w-full max-w-xs lg:block">
+    <div ref={containerRef} className={cn("relative w-full", className)}>
       <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
       <input
+        ref={inputRef}
         type="search"
         value={query}
         onChange={(e) => {
