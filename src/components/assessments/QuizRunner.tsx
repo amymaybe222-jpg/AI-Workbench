@@ -10,6 +10,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { supabase, DEMO_USER_ID } from "@/lib/supabase";
 import { downloadCertificate } from "@/lib/certificate";
+import { useToast } from "@/components/providers/ToastProvider";
 import { Quiz } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +19,7 @@ const PASS_THRESHOLD = 80;
 type Phase = "intro" | "question" | "result";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
+  const toast = useToast();
   const [phase, setPhase] = useState<Phase>("intro");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(quiz.questions.length).fill(null));
@@ -97,6 +99,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       await supabase.from("quiz_results").update({ certificate_name: certName.trim() }).eq("id", resultId);
     }
     setCertGenerated(true);
+    toast.success("Certificate downloaded.");
   }
 
   if (phase === "intro") {

@@ -13,12 +13,14 @@ import { useAuth } from "@/lib/useAuth";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
 import { supabase, DEMO_USER_ID } from "@/lib/supabase";
 import { downloadCertificate } from "@/lib/certificate";
+import { useToast } from "@/components/providers/ToastProvider";
 import { QuizResult, UserProfile } from "@/types";
 
 const MAX_AVATAR_BYTES = 2 * 1024 * 1024;
 
 export function ProfileView() {
   const router = useRouter();
+  const toast = useToast();
   const { isLoggedIn, hydrated: authHydrated, logout } = useAuth();
   const { profile, hydrated: profileHydrated, updateProfile } = useProfile();
   const [results, setResults] = useState<QuizResult[]>([]);
@@ -79,6 +81,7 @@ export function ProfileView() {
     e.preventDefault();
     updateProfile(draft);
     setEditing(false);
+    toast.success("Profile updated.");
   }
 
   function handleSignOut() {
@@ -119,6 +122,7 @@ export function ProfileView() {
         day: "numeric",
       }),
     });
+    toast.success("Certificate downloaded.");
   }
 
   if (!authHydrated || !isLoggedIn || !profileHydrated) {

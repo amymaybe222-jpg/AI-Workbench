@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { AppShell } from "@/components/layout/AppShell";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ToastProvider } from "@/components/providers/ToastProvider";
 import { AnalyticsScripts } from "@/components/layout/AnalyticsScripts";
 import "./globals.css";
 
@@ -91,9 +92,11 @@ export default function RootLayout({
           Skip to content
         </a>
         <AnalyticsScripts measurementId={GA_MEASUREMENT_ID} />
-        <AuthProvider>
-          <AppShell>{children}</AppShell>
-        </AuthProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <AppShell>{children}</AppShell>
+          </AuthProvider>
+        </ToastProvider>
       </body>
     </html>
   );

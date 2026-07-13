@@ -11,6 +11,7 @@ import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { useCommunityPosts } from "@/lib/useCommunityPosts";
 import { useProfile } from "@/lib/useProfile";
 import { useAuth } from "@/lib/useAuth";
+import { useToast } from "@/components/providers/ToastProvider";
 import { NewPostForm } from "./NewPostForm";
 import { cn } from "@/lib/utils";
 import { CommunityComment } from "@/types";
@@ -122,6 +123,7 @@ export function PostDetail({
   initialData: CommunityPostsInitialData;
 }) {
   const router = useRouter();
+  const toast = useToast();
   const {
     getPost,
     hydrated,
@@ -181,6 +183,7 @@ export function PostDetail({
     try {
       await addComment(post!.id, { author: profile.name, role: profile.role, body: comment.trim() });
       setComment("");
+      toast.success("Comment posted.");
     } catch {
       setActionError("Couldn't post your comment. Please try again.");
     }
@@ -198,6 +201,7 @@ export function PostDetail({
             try {
               await updatePost(post.id, { title: data.title, body: data.body, tags: data.tags, tool: data.tool });
               setEditingPost(false);
+              toast.success("Post updated.");
             } catch {
               setActionError("Couldn't save your changes. Please try again.");
             }
@@ -293,9 +297,15 @@ export function PostDetail({
               comment={c}
               canEdit={!!currentUserId && c.owner_id === currentUserId}
               onUpdate={(body) =>
-                updateComment(c.id, body).catch(() => setActionError("Couldn't save your comment. Please try again."))
+                updateComment(c.id, body)
+                  .then(() => toast.success("Comment updated."))
+                  .catch(() => setActionError("Couldn't save your comment. Please try again."))
               }
-              onDelete={() => deleteComment(c.id).catch(() => setActionError("Couldn't delete your comment. Please try again."))}
+              onDelete={() =>
+                deleteComment(c.id)
+                  .then(() => toast.success("Comment deleted."))
+                  .catch(() => setActionError("Couldn't delete your comment. Please try again."))
+              }
             />
           ))}
           {post.comments.length === 0 && (
@@ -347,6 +357,7 @@ export function PostDetail({
           setConfirmingDeletePost(false);
           try {
             await deletePost(post.id);
+            toast.success("Post deleted.");
             router.push("/community");
           } catch {
             setActionError("Couldn't delete your post. Please try again.");
