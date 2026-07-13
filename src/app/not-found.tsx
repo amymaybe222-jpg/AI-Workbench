@@ -5,7 +5,17 @@ import { LinkButton } from "@/components/ui/LinkButton";
 
 export const metadata: Metadata = {
   title: "Page not found",
-  description: "The page you're looking for doesn't exist or may have moved.",
+  description:
+    "The page you were looking for doesn't exist or may have moved. Head back to the AI Workbench homepage to keep learning, exploring tools, or practicing.",
+  robots: { index: false, follow: true },
+  openGraph: {
+    title: "Page not found — AI Workbench",
+    description:
+      "The page you were looking for doesn't exist or may have moved. Head back to the AI Workbench homepage to keep learning, exploring tools, or practicing.",
+    type: "website",
+    siteName: "AI Workbench",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
 };
 
 export default function NotFound() {

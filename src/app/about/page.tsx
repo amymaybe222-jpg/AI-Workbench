@@ -5,7 +5,15 @@ import { Card } from "@/components/ui/Card";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "AI Workbench helps professionals learn AI, pick the right AI tools, use ready-made prompts, and track progress with assessments and certificates.",
+    "AI Workbench is a practical AI skills platform for professionals — helping you learn core concepts, pick the right tools, and prove hands-on ability at work.",
+  openGraph: {
+    title: "About — AI Workbench",
+    description:
+      "AI Workbench is a practical AI skills platform for professionals — helping you learn core concepts, pick the right tools, and prove hands-on ability at work.",
+    type: "website",
+    siteName: "AI Workbench",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
 };
 
 export default function AboutPage() {

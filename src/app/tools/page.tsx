@@ -6,7 +6,14 @@ import { ToolCatalog } from "@/components/tools/ToolCatalog";
 export const metadata: Metadata = {
   title: "Tool Picker",
   description:
-    "Describe a task and get a ranked shortlist of the best AI tool for it — Claude, ChatGPT, Copilot, Perplexity, and more.",
+    "Describe a work task in plain language and get a ranked shortlist of the best AI tool for it, comparing Claude, ChatGPT, Copilot, Perplexity, and more.",
+  openGraph: {
+    title: "Tool Picker — AI Workbench",
+    description:
+      "Describe a work task in plain language and get a ranked shortlist of the best AI tool for it, comparing Claude, ChatGPT, Copilot, Perplexity, and more.",
+    type: "website",
+    siteName: "AI Workbench",
+  },
 };
 
 export default function ToolsPage() {

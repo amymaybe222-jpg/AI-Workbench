@@ -5,7 +5,16 @@ import { TeamPhoto } from "@/components/team/TeamPhoto";
 
 export const metadata: Metadata = {
   title: "Meet the Team",
-  description: "The team behind AI Workbench.",
+  description:
+    "Meet the small, close-knit team building AI Workbench — the platform helping professionals learn AI, choose the right tools, and track progress at work.",
+  openGraph: {
+    title: "Meet the Team — AI Workbench",
+    description:
+      "Meet the small, close-knit team building AI Workbench — the platform helping professionals learn AI, choose the right tools, and track progress at work.",
+    type: "website",
+    siteName: "AI Workbench",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
 };
 
 export default function TeamPage() {

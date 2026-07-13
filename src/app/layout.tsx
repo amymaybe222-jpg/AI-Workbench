@@ -23,10 +23,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ai-workbench.example.com"),
   title: {
     default: "AI Workbench — Learn AI Skills & Track Your Progress",
-    template: "%s · AI Workbench",
+    template: "%s — AI Workbench",
   },
   description:
-    "AI Workbench helps professionals learn AI, pick the right AI tools, use ready-made prompts, and track progress with assessments and certificates.",
+    "AI Workbench helps professionals learn core AI concepts, pick the right AI tool, use ready-made prompts, and prove their progress with scored assessments.",
   keywords: [
     "AI training",
     "AI tools",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI Workbench — Learn AI Skills & Track Your Progress",
     description:
-      "AI Workbench helps professionals learn AI, pick the right AI tools, use ready-made prompts, and track progress with assessments and certificates.",
+      "AI Workbench helps professionals learn core AI concepts, pick the right AI tool, use ready-made prompts, and prove their progress with scored assessments.",
     type: "website",
     siteName: "AI Workbench",
   },
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AI Workbench — Learn AI Skills & Track Your Progress",
     description:
-      "AI Workbench helps professionals learn AI, pick the right AI tools, use ready-made prompts, and track progress with assessments and certificates.",
+      "AI Workbench helps professionals learn core AI concepts, pick the right AI tool, use ready-made prompts, and prove their progress with scored assessments.",
   },
   robots: {
     index: true,

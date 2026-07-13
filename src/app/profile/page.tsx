@@ -4,7 +4,15 @@ import { ProfileView } from "@/components/profile/ProfileView";
 
 export const metadata: Metadata = {
   title: "Profile",
-  description: "Your AI learning profile — assessments completed, certificates earned, and saved prompts.",
+  description:
+    "View your AI Workbench profile — a running record of assessments completed, certificates earned, prompts saved, and every community post you have shared.",
+  openGraph: {
+    title: "Profile — AI Workbench",
+    description:
+      "View your AI Workbench profile — a running record of assessments completed, certificates earned, prompts saved, and every community post you have shared.",
+    type: "website",
+    siteName: "AI Workbench",
+  },
 };
 
 export default function ProfilePage() {

@@ -6,7 +6,9 @@ import { AdminGate } from "@/components/admin/AdminGate";
 const UserAdmin = dynamic(() => import("@/components/admin/UserAdmin").then((m) => m.UserAdmin));
 
 export const metadata: Metadata = {
-  title: "Admin · Company details",
+  title: "Company Details",
+  description:
+    "Manage AI Workbench company details and user access as an admin, controlling who can sign in and which organization-level settings apply to your team.",
   robots: { index: false, follow: false },
 };
 

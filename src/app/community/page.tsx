@@ -6,7 +6,14 @@ import { loadCommunityPostsInitialData } from "@/lib/community/loadCommunityPost
 export const metadata: Metadata = {
   title: "Community",
   description:
-    "Join an AI community of professionals sharing real workplace AI wins, prompts, and peer feedback.",
+    "Join the AI Workbench community to see how colleagues across the company are applying AI at work, share your own wins and prompts, and get peer feedback.",
+  openGraph: {
+    title: "Community — AI Workbench",
+    description:
+      "Join the AI Workbench community to see how colleagues across the company are applying AI at work, share your own wins and prompts, and get peer feedback.",
+    type: "website",
+    siteName: "AI Workbench",
+  },
 };
 
 export default async function CommunityPage() {

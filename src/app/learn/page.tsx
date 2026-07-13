@@ -10,7 +10,14 @@ import { LearnTopic } from "@/types";
 export const metadata: Metadata = {
   title: "Learn AI",
   description:
-    "Practical lessons on generative AI fundamentals, prompt engineering, and tools like Claude, ChatGPT, and Copilot — built for professional work.",
+    "Browse practical, no-fluff lessons on generative AI fundamentals, prompt engineering, and tools like Claude, ChatGPT, and Copilot for professional use.",
+  openGraph: {
+    title: "Learn AI — AI Workbench",
+    description:
+      "Browse practical, no-fluff lessons on generative AI fundamentals, prompt engineering, and tools like Claude, ChatGPT, and Copilot for professional use.",
+    type: "website",
+    siteName: "AI Workbench",
+  },
 };
 
 function TopicGrid({ topics, category }: { topics: LearnTopic[]; category: "Foundations" | "Tools" }) {

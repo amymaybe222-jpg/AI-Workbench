@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabase";
+import { buildMetaDescription } from "@/lib/seo";
 import { loadCommunityPostsInitialData } from "@/lib/community/loadCommunityPosts";
 
 const PostDetail = dynamic(() => import("@/components/community/PostDetail").then((m) => m.PostDetail));
@@ -22,14 +23,35 @@ export async function generateMetadata({
   // copy instead of an empty/broken title.
   const { data: post } = await supabase.from("posts").select("*").eq("id", id).maybeSingle();
   if (!post) {
+    const description = buildMetaDescription(
+      "Read what an AI Workbench community member built or learned with AI.",
+      "Browse more stories and add your own feedback in the AI Workbench community."
+    );
     return {
       title: "Community post",
-      description: "Read what an AI Workbench community member built or learned with AI, and add your own feedback.",
+      description,
+      openGraph: {
+        title: "Community post — AI Workbench",
+        description,
+        type: "website",
+        siteName: "AI Workbench",
+      },
     };
   }
+  const title = post.seo_title ?? post.title;
+  const description = buildMetaDescription(
+    post.seo_description ?? post.body,
+    "Read the full story and add your own feedback in the AI Workbench community."
+  );
   return {
-    title: post.seo_title ?? post.title,
-    description: post.seo_description ?? post.body.slice(0, 155),
+    title,
+    description,
+    openGraph: {
+      title: `${title} — AI Workbench`,
+      description,
+      type: "article",
+      siteName: "AI Workbench",
+    },
   };
 }
 

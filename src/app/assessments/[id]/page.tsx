@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabase";
+import { buildMetaDescription } from "@/lib/seo";
 import { Quiz, QuizQuestion } from "@/types";
 
 const QuizRunner = dynamic(() => import("@/components/assessments/QuizRunner").then((m) => m.QuizRunner));
@@ -34,9 +35,19 @@ export async function generateMetadata({
   const { id } = await params;
   const quiz = await getQuiz(id);
   if (!quiz) return {};
+  const description = buildMetaDescription(
+    quiz.description,
+    "Take this free, scored AI knowledge assessment on AI Workbench and earn a downloadable certificate by scoring 80% or above."
+  );
   return {
     title: quiz.title,
-    description: quiz.description,
+    description,
+    openGraph: {
+      title: `${quiz.title} — AI Workbench`,
+      description,
+      type: "website",
+      siteName: "AI Workbench",
+    },
   };
 }
 

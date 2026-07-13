@@ -6,7 +6,9 @@ import { AdminGate } from "@/components/admin/AdminGate";
 const PromptAdmin = dynamic(() => import("@/components/admin/PromptAdmin").then((m) => m.PromptAdmin));
 
 export const metadata: Metadata = {
-  title: "Admin · Prompts",
+  title: "Prompt Admin",
+  description:
+    "Manage the AI Workbench prompt library as an admin — add, edit, and remove the ready-to-use prompts made available to every professional on the platform.",
   robots: { index: false, follow: false },
 };
 

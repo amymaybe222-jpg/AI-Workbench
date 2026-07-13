@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { supabase } from "@/lib/supabase";
+import { buildMetaDescription } from "@/lib/seo";
 import { AiTool, LearnTopic } from "@/types";
 
 export async function generateStaticParams() {
@@ -31,9 +32,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const topic = await getLearnTopic(slug);
   if (!topic) return {};
+  const description = buildMetaDescription(
+    topic.summary,
+    "Part of AI Workbench's free library of concise, practical AI lessons for professionals."
+  );
   return {
     title: topic.title,
-    description: topic.summary,
+    description,
+    openGraph: {
+      title: `${topic.title} — AI Workbench`,
+      description,
+      type: "article",
+      siteName: "AI Workbench",
+    },
   };
 }
 

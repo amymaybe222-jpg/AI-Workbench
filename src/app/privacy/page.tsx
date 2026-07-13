@@ -4,7 +4,16 @@ import { Card } from "@/components/ui/Card";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How AI Workbench handles your data.",
+  description:
+    "Read AI Workbench's privacy policy to learn what profile, prompt, and assessment data is stored locally in your browser, and how that data is handled.",
+  openGraph: {
+    title: "Privacy Policy — AI Workbench",
+    description:
+      "Read AI Workbench's privacy policy to learn what profile, prompt, and assessment data is stored locally in your browser, and how that data is handled.",
+    type: "website",
+    siteName: "AI Workbench",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
 };
 
 export default function PrivacyPage() {

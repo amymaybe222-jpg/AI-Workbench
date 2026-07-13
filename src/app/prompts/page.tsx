@@ -5,7 +5,14 @@ import { PromptLibrary } from "@/components/prompts/PromptLibrary";
 export const metadata: Metadata = {
   title: "Prompt Library",
   description:
-    "Categorized, ready-to-use AI prompts for engineering, support, sales, leadership, HR, data, and marketing teams.",
+    "Browse a categorized library of ready-to-use AI prompts for engineering, support, sales, leadership, HR, data, and marketing teams to copy and adapt today.",
+  openGraph: {
+    title: "Prompt Library — AI Workbench",
+    description:
+      "Browse a categorized library of ready-to-use AI prompts for engineering, support, sales, leadership, HR, data, and marketing teams to copy and adapt today.",
+    type: "website",
+    siteName: "AI Workbench",
+  },
 };
 
 export default function PromptsPage() {
