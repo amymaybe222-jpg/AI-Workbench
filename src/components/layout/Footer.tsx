@@ -14,6 +14,7 @@ const companyLinks = [
   { href: "/about", label: "About" },
   { href: "/team", label: "Meet the team" },
   { href: "/admin/prompts", label: "Admin" },
+  { href: "/admin/users", label: "Company details" },
 ];
 
 const legalLinks = [
