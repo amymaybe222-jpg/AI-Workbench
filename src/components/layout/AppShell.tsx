@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { CookieConsentBanner } from "./CookieConsentBanner";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -10,6 +11,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="mx-auto max-w-6xl animate-fade-in">{children}</div>
       </main>
       <Footer />
+      <CookieConsentBanner />
     </div>
   );
 }

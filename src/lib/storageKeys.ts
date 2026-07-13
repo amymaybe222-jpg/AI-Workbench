@@ -2,4 +2,5 @@
 export const STORAGE_KEYS = {
   isLoggedIn: "aiw:is-logged-in",
   theme: "aiw:theme",
+  cookieConsent: "aiw:cookie-consent",
 } as const;
