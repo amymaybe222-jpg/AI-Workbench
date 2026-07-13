@@ -1,24 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { LogIn } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/layout/Logo";
-import { useAuth } from "@/lib/useAuth";
+import { supabase } from "@/lib/supabase";
 
 export function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(
+    searchParams.get("error") === "auth_failed" ? "Sign-in failed. Please try again." : null,
+  );
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    login();
-    router.push(searchParams.get("redirect") || "/settings");
+  async function handleGoogleSignIn() {
+    setLoading(true);
+    setError(null);
+
+    const redirect = searchParams.get("redirect") || "/settings";
+    const callbackUrl = new URL("/auth/callback", window.location.origin);
+    callbackUrl.searchParams.set("redirect", redirect);
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: callbackUrl.toString() },
+    });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    }
   }
 
   return (
@@ -27,44 +39,43 @@ export function LoginForm() {
       <Card className="w-full">
         <h1 className="text-lg font-semibold text-text">Sign in</h1>
         <p className="mt-1 text-sm text-text-muted">
-          Enter your work email and password to continue.
+          Continue with your Google account to manage your profile and settings.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="login-email" className="text-xs font-medium text-text-muted">
-              Email
-            </label>
-            <input
-              id="login-email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@company.com"
-              className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
-            />
-          </div>
-          <div>
-            <label htmlFor="login-password" className="text-xs font-medium text-text-muted">
-              Password
-            </label>
-            <input
-              id="login-password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2.5 text-base text-text placeholder:text-text-muted focus:border-primary"
-            />
-          </div>
-          <Button type="submit" className="w-full" size="lg">
-            <LogIn className="h-4 w-4" aria-hidden="true" />
-            Sign in
-          </Button>
-        </form>
+        {error && (
+          <p className="mt-4 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2 text-sm text-accent">
+            {error}
+          </p>
+        )}
+
+        <Button onClick={handleGoogleSignIn} disabled={loading} className="mt-6 w-full" size="lg">
+          <GoogleIcon className="h-4 w-4" aria-hidden="true" />
+          {loading ? "Redirecting…" : "Continue with Google"}
+        </Button>
       </Card>
     </div>
+  );
+}
+
+function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" {...props}>
+      <path
+        fill="#4285F4"
+        d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.87c2.27-2.09 3.58-5.17 3.58-8.82Z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 24c3.24 0 5.96-1.07 7.94-2.91l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.28v3.11A12 12 0 0 0 12 24Z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.61H1.28A12 12 0 0 0 0 12c0 1.94.46 3.77 1.28 5.39l3.99-3.11Z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.28 6.61l3.99 3.11C6.22 6.86 8.87 4.75 12 4.75Z"
+      />
+    </svg>
   );
 }

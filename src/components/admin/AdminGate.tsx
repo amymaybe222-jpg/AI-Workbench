@@ -16,7 +16,7 @@ export function AdminGate({ children }: { children: ReactNode }) {
         <ShieldAlert className="h-8 w-8 text-text-muted" aria-hidden="true" />
         <p className="text-sm font-medium text-text">Restricted page</p>
         <p className="max-w-sm text-sm text-text-muted">
-          This page is only available to admins. Admin accounts aren&apos;t set up yet — check back once that&apos;s in place.
+          This page is only available to admins.
         </p>
       </Card>
     );

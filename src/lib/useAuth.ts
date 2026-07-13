@@ -1,27 +1,78 @@
 "use client";
 
-import { useLocalStorage } from "./useLocalStorage";
-import { STORAGE_KEYS } from "./storageKeys";
+import { useEffect, useState } from "react";
+import type { Session } from "@supabase/supabase-js";
+import { supabase } from "./supabase";
 
-// Mock session state — this app has no real backend, so "logged in" is a
-// local flag only, consistent with every other piece of state in the app
-// (quiz results, saved prompts, profile) being localStorage-backed.
 export function useAuth() {
-  const [isLoggedIn, setIsLoggedIn, hydrated] = useLocalStorage(STORAGE_KEYS.isLoggedIn, false);
+  const [session, setSession] = useState<Session | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setHydrated(true);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+      setHydrated(true);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return {
-    isLoggedIn,
+    isLoggedIn: !!session,
     hydrated,
-    login: () => setIsLoggedIn(true),
-    logout: () => setIsLoggedIn(false),
+    logout: () => supabase.auth.signOut(),
   };
 }
 
-// Placeholder until real auth exists. There's no session or role concept yet
-// (see the comment above), so this intentionally always returns false —
-// admin pages stay restricted for everyone until this is wired up to a real
-// admin-role check (e.g. a Supabase Auth session with `users.role === "admin"`).
 export function useIsAdmin() {
-  const { hydrated } = useAuth();
-  return { isAdmin: false, hydrated };
+  const { isLoggedIn, hydrated: authHydrated } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [roleHydrated, setRoleHydrated] = useState(false);
+
+  useEffect(() => {
+    if (!authHydrated) return;
+
+    if (!isLoggedIn) {
+      setIsAdmin(false);
+      setRoleHydrated(true);
+      return;
+    }
+
+    let cancelled = false;
+    setRoleHydrated(false);
+
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) {
+        if (!cancelled) {
+          setIsAdmin(false);
+          setRoleHydrated(true);
+        }
+        return;
+      }
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", data.user.id)
+        .single();
+
+      if (!cancelled) {
+        setIsAdmin(profile?.role === "admin");
+        setRoleHydrated(true);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authHydrated, isLoggedIn]);
+
+  return { isAdmin, hydrated: authHydrated && roleHydrated };
 }
