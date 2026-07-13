@@ -26,7 +26,7 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const protectedPrefixes = ["/admin", "/settings", "/profile"];
+  const protectedPrefixes = ["/admin", "/profile"];
   if (protectedPrefixes.some((prefix) => request.nextUrl.pathname.startsWith(prefix)) && !user) {
     const redirectUrl = new URL("/login", request.url);
     redirectUrl.searchParams.set("redirect", request.nextUrl.pathname);

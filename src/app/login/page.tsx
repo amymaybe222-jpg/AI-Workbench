@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 export const metadata: Metadata = {
-  title: "Sign in",
-  description: "Sign in to AI Workbench to manage your profile and settings.",
+  title: "Log in",
+  description: "Log in to AI Workbench to manage your profile.",
 };
 
 export default function LoginPage() {

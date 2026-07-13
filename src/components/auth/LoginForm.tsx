@@ -18,7 +18,7 @@ export function LoginForm() {
     setLoading(true);
     setError(null);
 
-    const redirect = searchParams.get("redirect") || "/settings";
+    const redirect = searchParams.get("redirect") || "/profile";
     const callbackUrl = new URL("/auth/callback", window.location.origin);
     callbackUrl.searchParams.set("redirect", redirect);
 
@@ -37,9 +37,9 @@ export function LoginForm() {
     <div className="mx-auto flex max-w-sm flex-col items-center">
       <Logo className="mb-8" />
       <Card className="w-full">
-        <h1 className="text-lg font-semibold text-text">Sign in</h1>
+        <h1 className="text-lg font-semibold text-text">Log in</h1>
         <p className="mt-1 text-sm text-text-muted">
-          Continue with your Google account to manage your profile and settings.
+          Continue with your Google account to manage your profile.
         </p>
 
         {error && (

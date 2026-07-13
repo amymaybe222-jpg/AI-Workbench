@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   const redirectTo =
     requestedRedirect && requestedRedirect.startsWith("/") && !requestedRedirect.startsWith("//")
       ? requestedRedirect
-      : "/settings";
+      : "/profile";
 
   if (code) {
     const supabase = await createClient();

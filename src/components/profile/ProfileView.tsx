@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Award, BookMarked, MessagesSquare, Pencil, Save, Target } from "lucide-react";
+import { Award, BookMarked, LogOut, MessagesSquare, Pencil, Save, Target } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -19,7 +19,7 @@ const MAX_AVATAR_BYTES = 2 * 1024 * 1024;
 
 export function ProfileView() {
   const router = useRouter();
-  const { isLoggedIn, hydrated: authHydrated } = useAuth();
+  const { isLoggedIn, hydrated: authHydrated, logout } = useAuth();
   const { profile, hydrated: profileHydrated, updateProfile } = useProfile();
   const [results, setResults] = useState<QuizResult[]>([]);
   const [savedPromptCount, setSavedPromptCount] = useState(0);
@@ -79,6 +79,11 @@ export function ProfileView() {
     e.preventDefault();
     updateProfile(draft);
     setEditing(false);
+  }
+
+  function handleSignOut() {
+    logout();
+    router.push("/login");
   }
 
   function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -170,6 +175,19 @@ export function ProfileView() {
                 className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text focus:border-primary"
               />
             </div>
+            <div>
+              <label htmlFor="p-website" className="text-xs font-medium text-text-muted">
+                Website
+              </label>
+              <input
+                id="p-website"
+                type="url"
+                value={draft.website ?? ""}
+                onChange={(e) => setDraft({ ...draft, website: e.target.value })}
+                placeholder="https://your-site.com"
+                className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text placeholder:text-text-muted focus:border-primary"
+              />
+            </div>
             <div className="flex gap-2">
               <Button type="submit" size="sm">
                 <Save className="h-3.5 w-3.5" aria-hidden="true" />
@@ -207,6 +225,14 @@ export function ProfileView() {
                 {profile.website.replace(/^https?:\/\//, "")}
               </a>
             )}
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="focus-ring mt-5 flex items-center gap-1.5 border-t border-border pt-4 text-xs font-medium text-text-muted hover:text-text"
+            >
+              <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+              Sign out
+            </button>
           </div>
         )}
       </Card>
