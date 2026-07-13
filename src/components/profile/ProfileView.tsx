@@ -93,18 +93,6 @@ export function ProfileView() {
                 className="focus-ring mt-1.5 w-full rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text focus:border-primary"
               />
             </div>
-            <div>
-              <label htmlFor="p-bio" className="text-xs font-medium text-text-muted">
-                Bio
-              </label>
-              <textarea
-                id="p-bio"
-                rows={3}
-                value={draft.bio}
-                onChange={(e) => setDraft({ ...draft, bio: e.target.value })}
-                className="focus-ring mt-1.5 w-full resize-y rounded-lg border border-border bg-surface-raised px-3 py-2 text-base text-text focus:border-primary"
-              />
-            </div>
             <div className="flex gap-2">
               <Button type="submit" size="sm">
                 <Save className="h-3.5 w-3.5" aria-hidden="true" />
@@ -134,7 +122,6 @@ export function ProfileView() {
             <p className="text-sm text-text-muted">
               {profile.role} · {profile.team}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-text-muted">{profile.bio}</p>
             {profile.website && (
               <a
                 href={profile.website}
